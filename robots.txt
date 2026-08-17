@@ -1,0 +1,8 @@
+# ChapterByEmm — REPLACE chapterbyemm.com with your real domain
+User-agent: *
+Allow: /
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /wishlist.html
+
+Sitemap: https://chapterbyemm.com/sitemap.xml

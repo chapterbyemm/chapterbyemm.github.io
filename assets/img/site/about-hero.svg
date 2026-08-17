@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img">
+  <rect width="1200" height="900" fill="#E8E2D6"/>
+  <g opacity=".5"><circle cx="936.0" cy="225.0" r="198.0" fill="#fff" opacity=".35"/>
+  <circle cx="240.0" cy="720.0" r="270.0" fill="#000" opacity=".05"/></g>
+  <text x="600.0" y="450.0" text-anchor="middle" font-family="Georgia,serif" font-size="81" fill="#3A342C">About Emm</text>
+  <text x="600.0" y="517.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="28" letter-spacing="4" fill="#3A342C" opacity=".6">THE BRAND</text>
+</svg>

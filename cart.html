@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Cart | ChapterByEmm</title>
+  <meta name="description" content="Review the printed T-shirts in your ChapterByEmm cart, update sizes and quantities, apply a promo code and continue to checkout.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://chapterbyemm.com/cart.html">
+  <link rel="icon" href="assets/img/site/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="cart">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-site-header></div>
+
+  <main id="main">
+    <header class="shell page-head">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a> / <span aria-current="page">Cart</span>
+      </nav>
+      <h1 style="font-size:var(--step-3)">Your cart</h1>
+      <p class="lede">Physical printed T-shirts, made to order and shipped to your address.</p>
+    </header>
+
+    <section class="shell" style="padding-bottom:var(--section-y)">
+      <div class="cart-layout">
+        <div data-cart-page></div>
+
+        <aside class="summary" data-cart-summary aria-label="Order summary">
+          <h2>Order summary</h2>
+          <div data-summary-rows></div>
+          <p class="hint" data-ship-progress></p>
+
+          <form class="promo-form" data-promo-form>
+            <label class="visually-hidden" for="promo">Promo code</label>
+            <input id="promo" name="promo" type="text" placeholder="Promo code" autocomplete="off">
+            <button class="btn btn--ghost btn--sm" type="submit">Apply</button>
+          </form>
+          <p class="hint" data-promo-status style="display:none"></p>
+          <p class="hint">Try <strong>NEWCHAPTER10</strong> for 10% off your first order.</p>
+
+          <a class="btn btn--block" href="checkout.html" style="margin-top:1rem">Continue to checkout</a>
+          <a class="btn btn--ghost btn--block" href="shop.html" style="margin-top:.5rem">Keep shopping</a>
+
+          <ul class="trust-list" style="margin-top:1.5rem">
+            <li>Printed &amp; dispatched in 2–4 business days</li>
+            <li>Free standard shipping over $75</li>
+            <li>30-day returns on unworn tees</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/pages.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img">
+  <rect width="600" height="600" fill="#EFE7DC"/>
+  <g opacity=".5"><circle cx="468.0" cy="150.0" r="132.0" fill="#fff" opacity=".35"/>
+  <circle cx="120.0" cy="480.0" r="180.0" fill="#000" opacity=".05"/></g>
+  <text x="300.0" y="300.0" text-anchor="middle" font-family="Georgia,serif" font-size="54" fill="#3A342C">@chapterbyemm</text>
+  <text x="300.0" y="345.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="19" letter-spacing="4" fill="#3A342C" opacity=".6">POST 01</text>
+</svg>

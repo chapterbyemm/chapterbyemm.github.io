@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" width="900" height="1100" role="img">
+  <rect width="900" height="1100" fill="#F4EFE8"/>
+  <ellipse cx="450.0" cy="1010" rx="290" ry="42" fill="#000" opacity=".06"/>
+  <g>
+    <path d="M330 250 L250 292 Q196 320 176 386 L142 512 Q136 540 164 549 L232 570 L232 852 Q232 892 272 892 L628 892 Q668 892 668 852 L668 570 L736 549 Q764 540 758 512 L724 386 Q704 320 650 292 L570 250 Q450 316 330 250 Z"
+      fill="#F6F1E9" stroke="#000" stroke-opacity=".10" stroke-width="2"/>
+    <path d="M330 250 Q450 316 570 250 Q470 236 430 236 Q390 236 330 250 Z" fill="#000" opacity=".07"/>
+    <path d="M232 570 L232 852 Q232 892 272 892 L300 892 L300 574 Z" fill="#000" opacity=".04"/>
+    <path d="M668 570 L668 852 Q668 892 628 892 L600 892 L600 574 Z" fill="#fff" opacity=".05"/>
+  </g>
+  <g opacity=".9">
+    <circle cx="450.0" cy="520" r="150" fill="none" stroke="#2B2823" stroke-opacity=".25" stroke-width="2"/>
+    <text x="450.0" y="512" text-anchor="middle" font-family="Georgia,serif" font-size="40" fill="#2B2823">everyday</text>
+    <text x="450.0" y="556" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="17" letter-spacing="5" fill="#2B2823" opacity=".65">PRINT DETAIL</text>
+  </g>
+</svg>

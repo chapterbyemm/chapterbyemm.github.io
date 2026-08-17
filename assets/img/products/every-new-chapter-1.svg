@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" width="900" height="1100" role="img">
+  <rect width="900" height="1100" fill="#F1EAE1"/>
+  <ellipse cx="450.0" cy="1010" rx="290" ry="42" fill="#000" opacity=".06"/>
+  <g>
+    <path d="M330 250 L250 292 Q196 320 176 386 L142 512 Q136 540 164 549 L232 570 L232 852 Q232 892 272 892 L628 892 Q668 892 668 852 L668 570 L736 549 Q764 540 758 512 L724 386 Q704 320 650 292 L570 250 Q450 316 330 250 Z"
+      fill="#F6F1E9" stroke="#000" stroke-opacity=".10" stroke-width="2"/>
+    <path d="M330 250 Q450 316 570 250 Q470 236 430 236 Q390 236 330 250 Z" fill="#000" opacity=".07"/>
+    <path d="M232 570 L232 852 Q232 892 272 892 L300 892 L300 574 Z" fill="#000" opacity=".04"/>
+    <path d="M668 570 L668 852 Q668 892 628 892 L600 892 L600 574 Z" fill="#fff" opacity=".05"/>
+  </g>
+  <text x="450.0" y="436" text-anchor="middle" font-family="Georgia,serif" font-size="58" fill="#2B2823" letter-spacing="1">Every New</text>
+  <text x="450.0" y="508" text-anchor="middle" font-family="Georgia,serif" font-size="58" fill="#2B2823" letter-spacing="1">Chapter</text>
+  <text x="450.0" y="594" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="20" letter-spacing="6" fill="#2B2823" opacity=".7">SINCE 2024</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" width="900" height="1100" role="img">
+  <rect width="900" height="1100" fill="#DCCFC6"/>
+  <g opacity=".5"><circle cx="702.0" cy="275.0" r="198.0" fill="#fff" opacity=".35"/>
+  <circle cx="180.0" cy="880.0" r="270.0" fill="#000" opacity=".05"/></g>
+  <text x="450.0" y="550.0" text-anchor="middle" font-family="Georgia,serif" font-size="81" fill="#3A342C">Bold</text>
+  <text x="450.0" y="617.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="28" letter-spacing="4" fill="#3A342C" opacity=".6">STATEMENT</text>
+</svg>

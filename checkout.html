@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout | ChapterByEmm</title>
+  <meta name="description" content="Secure checkout for your ChapterByEmm printed T-shirt order — enter your shipping address, choose a delivery speed and complete your purchase.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://chapterbyemm.com/checkout.html">
+  <link rel="icon" href="assets/img/site/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="checkout">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-site-header></div>
+
+  <main id="main">
+    <div data-checkout-shell>
+      <header class="shell page-head">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a> / <a href="cart.html">Cart</a> / <span aria-current="page">Checkout</span>
+        </nav>
+        <h1 style="font-size:var(--step-3)">Checkout</h1>
+        <p class="steps">
+          <span>Cart</span><span class="sep">—</span>
+          <span aria-current="step">Details &amp; delivery</span><span class="sep">—</span>
+          <span>Confirmation</span>
+        </p>
+        <p class="hint" data-empty-checkout style="display:none;color:var(--error)">
+          Your cart is empty. <a href="shop.html">Browse T-shirts</a> before checking out.
+        </p>
+      </header>
+
+      <section class="shell" style="padding-bottom:var(--section-y)">
+        <div class="checkout-layout">
+          <form data-checkout-form novalidate>
+            <fieldset>
+              <legend>Contact</legend>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@email.com">
+                <p class="hint">Your order confirmation and tracking link are sent here.</p>
+              </div>
+              <div class="field">
+                <label for="phone">Phone (for delivery updates)</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Optional">
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Shipping address</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="firstName">First name</label>
+                  <input id="firstName" name="firstName" type="text" required autocomplete="given-name">
+                </div>
+                <div class="field">
+                  <label for="lastName">Last name</label>
+                  <input id="lastName" name="lastName" type="text" required autocomplete="family-name">
+                </div>
+              </div>
+              <div class="field">
+                <label for="address1">Street address</label>
+                <input id="address1" name="address1" type="text" required autocomplete="address-line1">
+              </div>
+              <div class="field">
+                <label for="address2">Apartment, unit, etc. (optional)</label>
+                <input id="address2" name="address2" type="text" autocomplete="address-line2">
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="city">City</label>
+                  <input id="city" name="city" type="text" required autocomplete="address-level2">
+                </div>
+                <div class="field">
+                  <label for="region">State / Province</label>
+                  <input id="region" name="region" type="text" required autocomplete="address-level1">
+                </div>
+                <div class="field">
+                  <label for="postal">Postal / ZIP code</label>
+                  <input id="postal" name="postal" type="text" required autocomplete="postal-code">
+                </div>
+              </div>
+              <div class="field">
+                <label for="country">Country</label>
+                <!-- REPLACE: limit this list to the countries you ship to -->
+                <select id="country" name="country" required autocomplete="country-name">
+                  <option value="Canada">Canada</option>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Other">Other — contact us for a quote</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Delivery method</legend>
+              <div data-shipping-methods></div>
+              <p class="hint">Delivery times start once printing is complete (2–4 business days, or 3–5 for personalised tees).</p>
+              <div class="field" style="margin-top:1rem">
+                <label for="notes">Delivery notes (optional)</label>
+                <textarea id="notes" name="notes" style="min-height:90px" placeholder="Buzzer code, safe place to leave the parcel, gift note…"></textarea>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Payment</legend>
+              <!-- ================================================================
+                   PAYMENT INTEGRATION PLACEHOLDER
+                   These fields are visual only and are NOT submitted anywhere.
+                   To take real payments, drop in your provider's hosted element
+                   here (Stripe Elements / PayPal Buttons / Shopify checkout) and
+                   see the marked block in assets/js/pages.js → initCheckout().
+                   Never collect raw card numbers yourself.
+                   ================================================================ -->
+              <div class="payment-placeholder">
+                <p style="margin-bottom:.75rem"><strong>Payment provider not connected yet.</strong></p>
+                <p>This is a placeholder for your card form. Connect Stripe, PayPal, or your preferred provider and its secure payment element will render in this box. Placing an order below will show the confirmation screen without charging anything.</p>
+              </div>
+
+              <div style="margin-top:1rem">
+                <label class="radio-card">
+                  <input type="radio" name="payMethod" value="card" checked>
+                  <span class="rc-body"><strong>Credit or debit card</strong><small>Visa, Mastercard, Amex</small></span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="payMethod" value="paypal">
+                  <span class="rc-body"><strong>PayPal</strong><small>You'll be redirected to PayPal to finish</small></span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="payMethod" value="wallet">
+                  <span class="rc-body"><strong>Apple Pay / Google Pay</strong><small>One-tap checkout on supported devices</small></span>
+                </label>
+              </div>
+
+              <label class="radio-card" style="margin-top:1rem">
+                <input type="checkbox" name="marketing" value="yes">
+                <span class="rc-body"><strong>Join the ChapterByEmm community</strong><small>Occasional emails about new prints. Unsubscribe any time.</small></span>
+              </label>
+            </fieldset>
+
+            <button class="btn btn--block" type="submit">Place order</button>
+            <p class="form-note" style="margin-top:.75rem;text-align:center">
+              By placing your order you agree to our returns policy. You're purchasing a physical printed T-shirt, shipped to the address above.
+            </p>
+          </form>
+
+          <aside class="summary" data-checkout-summary aria-label="Order summary">
+            <h2>Order summary</h2>
+            <div data-checkout-items style="margin-bottom:1rem"></div>
+            <hr class="rule">
+            <div data-summary-rows style="margin-top:.5rem"></div>
+            <p class="hint" data-ship-progress></p>
+
+            <form class="promo-form" data-promo-form>
+              <label class="visually-hidden" for="promo">Discount or promo code</label>
+              <input id="promo" name="promo" type="text" placeholder="Discount code" autocomplete="off">
+              <button class="btn btn--ghost btn--sm" type="submit">Apply</button>
+            </form>
+            <p class="hint" data-promo-status style="display:none"></p>
+
+            <a class="link-arrow" href="cart.html" style="margin-top:1rem;display:inline-flex">Edit cart</a>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/pages.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
