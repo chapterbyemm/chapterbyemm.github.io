@@ -9,9 +9,7 @@
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-const money = (n) =>
-  SITE.currencySymbol +
-  Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const money = (n) => SITE.currencySymbol + Math.round(Number(n)).toLocaleString("en-US");
 
 const getProduct = (id) => PRODUCTS.find((p) => p.id === id);
 const getCollection = (id) => COLLECTIONS.find((c) => c.id === id);
@@ -244,6 +242,116 @@ function initForms() {
   });
 }
 
+/* ---------- missing-image fallback -------------------------------------------
+   Until a real photo is uploaded, show a neutral "Photo coming soon" tile
+   instead of a broken-image icon. Once the file exists this never fires.
+   Elements marked data-nofallback (the logo) are simply removed instead, so
+   the text wordmark shows on its own.
+   --------------------------------------------------------------------------- */
+const FALLBACK_IMG = {
+  tall: "assets/img/site/photo-coming-soon.jpg",
+  wide: "assets/img/site/photo-coming-soon-wide.jpg",
+  square: "assets/img/site/photo-coming-soon-square.jpg",
+};
+
+function applyImageFallback(img) {
+  if (!img || img.dataset.fallbackDone) return;
+  img.dataset.fallbackDone = "1";
+
+  if (img.hasAttribute("data-nofallback")) {
+    img.remove();
+    return;
+  }
+
+  const w = Number(img.getAttribute("width")) || 0;
+  const h = Number(img.getAttribute("height")) || 0;
+  const ratio = w && h ? w / h : 0.8;
+  img.src = ratio > 1.12 ? FALLBACK_IMG.wide : ratio > 0.92 ? FALLBACK_IMG.square : FALLBACK_IMG.tall;
+  img.style.objectFit = "cover";
+}
+
+function initImageFallbacks() {
+  /* `error` does not bubble, so listen in the capture phase — this catches
+     every image inserted *after* this runs (product cards, collections…). */
+  document.addEventListener(
+    "error",
+    (e) => {
+      if (e.target && e.target.tagName === "IMG") applyImageFallback(e.target);
+    },
+    true
+  );
+
+  /* Static <img> tags already in the HTML start loading during page parse,
+     before this script runs — their error event can fire and be missed
+     before the listener above is attached. Sweep once for any that have
+     already failed by the time we get here. */
+  $$("img").forEach((img) => {
+    if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) applyImageFallback(img);
+  });
+}
+
+/* ---------- mini-cart confirmation --------------------------------------- */
+/* Shows "Added to your chapter 🤍" inside the bag drawer for a few seconds
+   after an item is added, instead of redirecting the customer away. */
+function showDrawerConfirm() {
+  const el = $("[data-drawer-confirm]");
+  if (!el) return;
+  el.hidden = false;
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => (el.hidden = true), 4000);
+}
+
+/* ---------- quick add (product-card hover / tap) ------------------------- */
+/* Adds size XS→XXL (first in-stock size) and the product's first colour
+   directly from the shop grid, so browsing stays fast. For products needing
+   a colour or size decision, customers still land on the full product page —
+   Quick Add is a shortcut, not a replacement for it. */
+function initQuickAdd() {
+  document.addEventListener("click", (e) => {
+    const openBtn = e.target.closest("[data-quick-add]");
+    if (openBtn) {
+      e.preventDefault();
+      const card = openBtn.closest(".product-card");
+      const existing = card.querySelector(".quick-add-panel");
+      if (existing) {
+        existing.remove();
+        return;
+      }
+      $$(".quick-add-panel").forEach((p) => p.remove());
+      const product = getProduct(openBtn.dataset.quickAdd);
+      if (!product) return;
+      const availableSizes = product.sizes.filter((s) => !(product.soldOut || []).includes(s));
+      const panel = document.createElement("div");
+      panel.className = "quick-add-panel";
+      panel.innerHTML = `
+        <p>Select a size</p>
+        <div class="quick-add-sizes">
+          ${availableSizes.map((s) => `<button type="button" data-quick-size="${s}">${s}</button>`).join("")}
+        </div>`;
+      card.querySelector(".media").appendChild(panel);
+      return;
+    }
+
+    const sizeBtn = e.target.closest("[data-quick-size]");
+    if (sizeBtn) {
+      e.preventDefault();
+      const card = sizeBtn.closest(".product-card");
+      const opener = card.querySelector("[data-quick-add]");
+      const product = getProduct(opener.dataset.quickAdd);
+      if (!product) return;
+      Store.addToCart({ id: product.id, size: sizeBtn.dataset.quickSize, color: product.colors[0], qty: 1 });
+      sizeBtn.closest(".quick-add-panel").remove();
+      showDrawerConfirm();
+      openPanel("#cart-drawer", "[data-open-cart]");
+      return;
+    }
+
+    if (!e.target.closest(".quick-add-panel")) {
+      $$(".quick-add-panel").forEach((p) => p.remove());
+    }
+  });
+}
+
 /* ---------- wishlist buttons (delegated) -------------------------------- */
 /* Call syncWishUI() directly after re-rendering markup. Only real *state
    changes* should dispatch wishlist:change — dispatching it from inside a
@@ -270,11 +378,19 @@ function initWishlistButtons() {
   document.addEventListener("wishlist:change", syncWishUI);
 }
 
+/* ---------- Etsy links (Digital Studio callouts) ------------------------- */
+function wireEtsyLinks() {
+  $$("[data-etsy-link]").forEach((a) => (a.href = SITE.social.etsy));
+}
+
 /* ---------- boot --------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderLayout();       // components.js
+  wireEtsyLinks();
   initStickyHeader();
+  initImageFallbacks();
   initWishlistButtons();
+  initQuickAdd();
   initCartUI();         // components.js
   initPage();           // pages.js
   initForms();

@@ -18,24 +18,25 @@
 
 /* 1. DESIGN TOKENS ======================================================== */
 :root {
-  /* Brand palette — change these to re-skin the whole site */
-  --cream: #fbf8f4;
-  --cream-2: #f4ede4;
-  --sand: #e9ded0;
-  --sand-2: #dccfbe;
-  --clay: #c9a294;
-  --rose: #d8bcb2;
-  --sage: #a9b6a3;
-  --ink: #1e1c1a;
-  --ink-soft: #423d38;
-  --muted: #7d746b;
-  --line: #e2d9cd;
+  /* Brand palette — drawn from the ChapterByEmm logo: warm ivory, terracotta,
+     muted teal, deep navy and soft sand. Change these to re-skin the site. */
+  --cream: #f3efe6;      /* warm ivory — primary canvas */
+  --cream-2: #ecE4d5;    /* deeper ivory — tinted sections */
+  --sand: #ddba8a;       /* soft sand — subtle supporting accent */
+  --sand-2: #c9a268;     /* deeper sand — hover states */
+  --clay: #c86d5b;       /* terracotta — CTAs, badges, highlights */
+  --rose: #d98f7e;       /* lighter terracotta — small accents */
+  --sage: #347b7b;       /* muted teal — secondary accent */
+  --ink: #173e47;        /* deep navy — primary text, dark surfaces */
+  --ink-soft: #2c525c;   /* secondary navy text */
+  --muted: #6e7a78;      /* muted teal-grey — captions, metadata */
+  --line: #e1d6c2;       /* warm hairline */
   --white: #ffffff;
-  --success: #5c7a5e;
-  --error: #a2564b;
+  --success: #3e7a5c;
+  --error: #b0483a;
 
-  /* Type */
-  --font-display: "Cormorant Garamond", "Fraunces", Georgia, "Times New Roman", serif;
+  /* Type — an editorial serif display face paired with a clean, modern sans */
+  --font-display: "Fraunces", "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   /* Scale */
@@ -46,15 +47,16 @@
   --step-3: clamp(2rem, 1.6rem + 2vw, 3rem);
   --step-4: clamp(2.6rem, 1.8rem + 4.5vw, 5.4rem);
 
-  /* Space + shape */
+  /* Space + shape — restrained radii and quiet shadows; an editorial brand,
+     not a rounded "app" aesthetic */
   --gap: clamp(1rem, 0.6rem + 1.5vw, 1.75rem);
   --section-y: clamp(3.5rem, 2rem + 6vw, 7rem);
   --shell: 1280px;
-  --radius: 14px;
-  --radius-lg: 22px;
-  --radius-pill: 999px;
-  --shadow-sm: 0 1px 2px rgba(30, 28, 26, 0.05), 0 4px 14px rgba(30, 28, 26, 0.04);
-  --shadow-md: 0 10px 40px rgba(30, 28, 26, 0.09);
+  --radius: 3px;
+  --radius-lg: 8px;
+  --radius-pill: 3px;
+  --shadow-sm: 0 1px 2px rgba(23, 62, 71, 0.05), 0 3px 12px rgba(23, 62, 71, 0.04);
+  --shadow-md: 0 10px 32px rgba(23, 62, 71, 0.12);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -86,9 +88,11 @@ img, svg { max-width: 100%; height: auto; display: block; }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
+  font-optical-sizing: auto;
   font-weight: 500;
   line-height: 1.12;
   letter-spacing: -0.01em;
+  text-wrap: balance;
   margin: 0 0 0.5em;
 }
 
@@ -163,7 +167,7 @@ a:not([class]) {
 .section--tint { background: var(--cream-2); }
 .section--sand { background: var(--sand); }
 .section--ink { background: var(--ink); color: var(--cream); }
-.section--ink .eyebrow, .section--ink .lede { color: rgba(251, 248, 244, 0.72); }
+.section--ink .eyebrow, .section--ink .lede { color: rgba(243, 239, 230, 0.72); }
 
 .section-head {
   display: flex;
@@ -258,7 +262,7 @@ input, select, textarea {
 }
 input:focus, select:focus, textarea:focus {
   border-color: var(--clay);
-  box-shadow: 0 0 0 3px rgba(201, 162, 148, 0.18);
+  box-shadow: 0 0 0 3px rgba(200, 109, 91, 0.18);
   outline: none;
 }
 textarea { min-height: 140px; resize: vertical; }
@@ -274,7 +278,7 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
   margin-top: 1rem;
   padding: 0.9rem 1.1rem;
   border-radius: 10px;
-  background: rgba(92, 122, 94, 0.12);
+  background: rgba(62, 122, 92, 0.12);
   color: var(--success);
   font-size: var(--step--1);
 }
@@ -308,12 +312,12 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(251, 248, 244, 0.88);
+  background: rgba(243, 239, 230, 0.88);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.site-header.is-stuck { border-color: var(--line); box-shadow: 0 6px 24px rgba(30, 28, 26, 0.05); }
+.site-header.is-stuck { border-color: var(--line); box-shadow: 0 6px 24px rgba(23, 62, 71, 0.06); }
 
 .header-inner {
   display: flex;
@@ -323,6 +327,9 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--font-display);
   font-size: 1.35rem;
   letter-spacing: 0.22em;
@@ -331,6 +338,18 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
   margin-right: auto;
 }
 .brand small { display: block; font-family: var(--font-body); font-size: 0.55rem; letter-spacing: 0.3em; color: var(--muted); }
+
+/* logo mark — sits beside the wordmark; removes itself if the file is missing */
+.brand-mark {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--cream-2);
+}
+.brand-mark--footer { width: 52px; height: 52px; }
+.footer-brand .brand { gap: 0.7rem; text-transform: none; letter-spacing: 0.12em; }
 
 .nav { display: flex; align-items: center; gap: clamp(0.8rem, 0.2rem + 1vw, 1.9rem); }
 .nav a {
@@ -438,7 +457,7 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
   position: fixed;
   inset: 0;
   z-index: 70;
-  background: rgba(30, 28, 26, 0.42);
+  background: rgba(23, 62, 71, 0.46);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.35s var(--ease), visibility 0.35s;
@@ -518,12 +537,13 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
   gap: clamp(1.5rem, 1rem + 3vw, 4rem);
   padding-block: clamp(3rem, 2rem + 5vw, 6.5rem);
 }
-.hero-copy { max-width: 34rem; }
+.hero-copy { max-width: 40rem; }
 .hero h1 {
-  /* sized so the single long word CHAPTERBYEMM always fits its column */
-  font-size: clamp(1.9rem, 0.3rem + 4vw, 4rem);
-  letter-spacing: 0.01em;
-  margin-bottom: 0.35em;
+  /* sized for the multi-word headline — text-wrap: balance (set globally on
+     h1–h4) settles this into 2–3 even lines rather than one word per line */
+  font-size: clamp(1.9rem, 1rem + 2.6vw, 3.4rem);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.45em;
   overflow-wrap: break-word;
 }
 .hero .tagline {
@@ -600,7 +620,7 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
   position: absolute;
   inset: auto 0 0 0;
   padding: 1.5rem 1.25rem;
-  background: linear-gradient(to top, rgba(30, 28, 26, 0.72), transparent);
+  background: linear-gradient(to top, rgba(23, 62, 71, 0.75), transparent);
   color: var(--cream);
 }
 .collection-card h3 { color: var(--cream); margin-bottom: 0.15rem; }
@@ -681,7 +701,7 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
   place-items: center;
   border: 0;
   border-radius: 50%;
-  background: rgba(251, 248, 244, 0.9);
+  background: rgba(243, 239, 230, 0.92);
   cursor: pointer;
   color: var(--ink-soft);
   transition: transform 0.25s var(--ease), color 0.25s var(--ease);
@@ -704,7 +724,7 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
 .swatch {
   width: 18px; height: 18px;
   border-radius: 50%;
-  border: 1px solid rgba(30, 28, 26, 0.18);
+  border: 1px solid rgba(23, 62, 71, 0.16);
   display: inline-block;
 }
 
@@ -764,7 +784,7 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
 .zoom-hint {
   position: absolute;
   bottom: 0.75rem; right: 0.75rem;
-  background: rgba(251, 248, 244, 0.9);
+  background: rgba(243, 239, 230, 0.92);
   border-radius: var(--radius-pill);
   padding: 0.35rem 0.8rem;
   font-size: 0.7rem;
@@ -966,9 +986,9 @@ legend { font-family: var(--font-display); font-size: var(--step-1); margin-bott
 .faq-empty { display: none; color: var(--muted); }
 
 /* 12. FOOTER ============================================================== */
-.site-footer { background: var(--ink); color: rgba(251, 248, 244, 0.78); padding-block: clamp(3rem, 2rem + 3vw, 4.5rem) 2rem; }
+.site-footer { background: var(--ink); color: rgba(243, 239, 230, 0.78); padding-block: clamp(3rem, 2rem + 3vw, 4.5rem) 2rem; }
 .site-footer h2, .site-footer h3 { color: var(--cream); }
-.footer-grid { display: grid; gap: var(--gap); grid-template-columns: 1.4fr repeat(3, minmax(140px, 1fr)); }
+.footer-grid { display: grid; gap: var(--gap); grid-template-columns: 1.5fr repeat(4, minmax(128px, 1fr)); }
 .footer-grid h3 { font-family: var(--font-body); font-size: var(--step--1); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; font-size: var(--step-0); }
 .footer-grid a:hover { color: var(--cream); text-decoration: underline; text-underline-offset: 3px; }
@@ -980,11 +1000,213 @@ legend { font-family: var(--font-display); font-size: var(--step-1); margin-bott
   gap: 0.75rem;
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(251, 248, 244, 0.16);
+  border-top: 1px solid rgba(243, 239, 230, 0.16);
   font-size: var(--step--1);
 }
+.footer-bottom nav[aria-label="Legal"] { display: flex; gap: 1.25rem; }
+.footer-bottom nav[aria-label="Legal"] a { text-decoration: underline; text-underline-offset: 3px; }
 .pay-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.pay-row span { border: 1px solid rgba(251, 248, 244, 0.24); border-radius: 6px; padding: 0.2rem 0.55rem; font-size: 0.68rem; letter-spacing: 0.1em; }
+.pay-row span { border: 1px solid rgba(243, 239, 230, 0.24); border-radius: 6px; padding: 0.2rem 0.55rem; font-size: 0.68rem; letter-spacing: 0.1em; }
+.pay-row .pay-soon { opacity: 0.55; }
+
+.footer-tagline { font-family: var(--font-display); font-style: italic; color: var(--sand); font-size: 1.05rem; margin-bottom: 0.5rem; }
+.footer-etsy { color: var(--sand) !important; }
+
+.footer-newsletter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: clamp(2.5rem, 1.5rem + 2vw, 3.5rem);
+  padding-top: clamp(2rem, 1.2rem + 2vw, 3rem);
+  border-top: 1px solid rgba(243, 239, 230, 0.16);
+}
+.footer-newsletter > div:first-child { max-width: 32ch; }
+.footer-newsletter form { display: flex; gap: 0.6rem; flex-wrap: wrap; min-width: 300px; }
+.footer-newsletter input { flex: 1 1 220px; background: rgba(243, 239, 230, 0.08); border-color: rgba(243, 239, 230, 0.24); color: var(--cream); }
+.footer-newsletter input::placeholder { color: rgba(243, 239, 230, 0.5); }
+.footer-newsletter .form-status { color: var(--sand); background: rgba(243, 239, 230, 0.08); }
+
+/* generic dismiss/remove link used inside drawers + line items */
+.remove { border: 0; background: none; padding: 0; font: inherit; font-size: var(--step--1); color: var(--muted); text-decoration: underline; cursor: pointer; }
+.remove:hover { color: var(--error); }
+
+/* Mini-cart confirmation banner — "Added to your chapter 🤍" */
+.drawer-confirm {
+  margin: 0;
+  padding: 0.85rem 1.5rem;
+  background: var(--cream-2);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--ink);
+  animation: fade-up 0.35s var(--ease);
+}
+.drawer-confirm[hidden] { display: none; }
+
+/* Mobile nav utility row (Wishlist / FAQ / Contact) */
+.mobile-nav-utility {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.mobile-nav-utility a,
+.mobile-nav-utility button {
+  font: inherit;
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Search + Account move into the mobile menu below 900px, keeping the
+   header to the 3 actions that matter most on a small screen */
+@media (max-width: 900px) {
+  .header-actions [data-open-search],
+  .header-actions [data-open-account] { display: none; }
+}
+
+/* Search panel */
+.search-form { display: flex; flex-direction: column; }
+.search-form input { font-size: var(--step-1); padding-block: 1rem; margin-bottom: 1rem; }
+
+/* Quick add (product card hover) */
+.quick-add {
+  position: absolute;
+  left: 0.75rem; right: 0.75rem; bottom: 0.75rem;
+  z-index: 2;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: rgba(243, 239, 230, 0.94);
+  color: var(--ink);
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.product-card:hover .quick-add,
+.product-card:focus-within .quick-add { opacity: 1; transform: none; }
+.quick-add:hover { background: var(--ink); color: var(--cream); }
+@media (hover: none) {
+  .quick-add { opacity: 1; transform: none; position: static; margin: 0.75rem; width: calc(100% - 1.5rem); }
+}
+
+.quick-add-panel {
+  position: absolute;
+  inset: auto 0.75rem 0.75rem;
+  z-index: 3;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+  box-shadow: var(--shadow-md);
+  animation: fade-up 0.2s var(--ease);
+}
+.quick-add-panel p { font-size: var(--step--1); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.quick-add-sizes { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.quick-add-sizes button {
+  min-width: 40px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  font: inherit;
+  font-size: var(--step--1);
+  cursor: pointer;
+}
+.quick-add-sizes button:hover { border-color: var(--ink); background: var(--ink); color: var(--cream); }
+
+/* Empty / coming-soon collection state */
+.empty-collection {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: var(--cream-2);
+  border: 1px dashed var(--sand-2);
+  border-radius: var(--radius-lg);
+}
+.empty-collection p:not(.eyebrow) { max-width: 46ch; margin-inline: auto 1.5rem; color: var(--ink-soft); }
+
+/* Product page statement + wishlist icon */
+.pdp-statement {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--sage);
+  margin-bottom: 1.5rem;
+}
+.wish-btn-pdp { flex: 0 0 auto; border: 1px solid var(--line); background: var(--white); }
+.wish-btn-pdp[aria-pressed="true"] { color: var(--clay); border-color: var(--clay); }
+.wish-btn-pdp[aria-pressed="true"] svg { fill: currentColor; }
+
+.radio-card--disabled { opacity: 0.55; cursor: not-allowed; }
+.radio-card--disabled input { cursor: not-allowed; }
+
+/* Journal */
+.journal-card {
+  display: block;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.journal-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.journal-card img { aspect-ratio: 4 / 3; object-fit: cover; }
+.journal-card-body { padding: 1.25rem 1.4rem 1.5rem; }
+.journal-card-body h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.journal-card-body p { color: var(--muted); font-size: var(--step--1); margin-bottom: 0.9rem; }
+
+/* Pull quote — used on the About page */
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-2);
+  line-height: 1.35;
+  color: var(--ink);
+  border-left: 2px solid var(--clay);
+  padding-left: clamp(1.25rem, 0.8rem + 1.5vw, 2.25rem);
+  margin-block: clamp(2.5rem, 1.5rem + 2vw, 4rem);
+}
+
+/* Digital Studio (Etsy) section */
+.digital-studio {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  padding: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+  display: grid;
+  gap: clamp(1rem, 0.6rem + 1vw, 1.75rem);
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.digital-studio h2 { margin-bottom: 0.4rem; }
+
+/* Size guide "how to measure" */
+.measure-guide { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.measure-step { padding: 1.25rem; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); }
+.measure-step strong { display: block; font-family: var(--font-display); font-size: 1.3rem; color: var(--clay); margin-bottom: 0.4rem; }
+
+/* Hero entrance — brief, restrained motion on first paint only */
+@keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.hero-copy > * { animation: hero-rise 0.7s var(--ease) both; }
+.hero-copy > *:nth-child(2) { animation-delay: 0.06s; }
+.hero-copy > *:nth-child(3) { animation-delay: 0.12s; }
+.hero-copy > *:nth-child(4) { animation-delay: 0.18s; }
+.hero-copy > *:nth-child(5) { animation-delay: 0.24s; }
+.hero-media { animation: hero-rise 0.9s var(--ease) 0.1s both; }
 
 /* 13. ANIMATION + RESPONSIVE ============================================== */
 @keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -1002,6 +1224,7 @@ legend { font-family: var(--font-display); font-size: var(--step-1); margin-bott
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .pdp, .cart-layout, .checkout-layout, .contact-layout { grid-template-columns: 1fr; }
   .summary { position: static; }
+  .digital-studio { grid-template-columns: 1fr; text-align: center; }
 }
 
 @media (max-width: 900px) {
@@ -1012,12 +1235,14 @@ legend { font-family: var(--font-display); font-size: var(--step-1); margin-bott
   .hero-media { order: -1; }
   .hero-media .float-card { left: auto; right: 0.75rem; bottom: -1rem; }
   .header-actions .btn { display: none; }
+  .footer-newsletter { flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 560px) {
   /* keep the logo + action icons inside a narrow viewport */
   .header-inner { min-height: 64px; gap: 0.25rem; }
-  .brand { font-size: 1rem; letter-spacing: 0.12em; }
+  .brand { font-size: 1rem; letter-spacing: 0.12em; gap: 0.45rem; }
+  .brand-mark { width: 34px; height: 34px; }
   .brand small { font-size: 0.5rem; letter-spacing: 0.18em; }
   .icon-btn { width: 40px; height: 40px; }
   .announce { font-size: 0.68rem; letter-spacing: 0.08em; }
@@ -1028,7 +1253,7 @@ legend { font-family: var(--font-display); font-size: var(--step-1); margin-bott
   .section-head { flex-direction: column; align-items: flex-start; }
   .hero-cta .btn { flex: 1 1 100%; }
   .grid--3, .grid--4 { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .product-card .card-actions { flex-direction: column; }
+  .mobile-nav-utility { gap: 1rem 1.5rem; }
 }
 
 @media print {

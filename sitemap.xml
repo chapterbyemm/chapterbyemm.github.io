@@ -6,6 +6,10 @@
   <url><loc>https://chapterbyemm.com/collections.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://chapterbyemm.com/custom-designs.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://chapterbyemm.com/about.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://chapterbyemm.com/journal.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://chapterbyemm.com/size-guide.html</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://chapterbyemm.com/shipping.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://chapterbyemm.com/returns-exchanges.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://chapterbyemm.com/faq.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://chapterbyemm.com/contact.html</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
 </urlset>

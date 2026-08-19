@@ -3,8 +3,9 @@
    --------------------------------------------------------------------------
    THIS IS THE MAIN FILE YOU EDIT.
    Everything below drives the whole website: products, prices, images,
-   collections, shipping rates, promo codes, your email and social links.
-   Nothing here requires a build step — save the file and refresh the page.
+   collections, shipping rates, promo codes, payment methods, your contact
+   details and social/Etsy links. Nothing here requires a build step — save
+   the file and refresh the page.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -12,450 +13,334 @@
    -------------------------------------------------------------------------- */
 const SITE = {
   name: "ChapterByEmm",
-  tagline: "Designs for every new chapter.",
-  intro: "Thoughtfully designed T-shirts for every chapter, mood, and moment.",
+  tagline: "Every Design Begins a New Chapter.",
+  intro: "Thoughtfully created T-shirts for the moments, moods and chapters that make you, you.",
+
+  // Your logo. Upload a square crop of the circular mark (no text) as this
+  // exact filename. If the file is missing, the site falls back to the
+  // wordmark in type — nothing looks broken while you're setting up.
+  logo: "assets/img/site/logo.png",
 
   // REPLACE: your real business email
   email: "hello@chapterbyemm.com",
-  // REPLACE: your customer-service phone (or delete the line and the Contact page block)
-  phone: "+1 (000) 000-0000",
-  // REPLACE: your studio location / shipping origin
-  location: "Toronto, Canada",
+  // REPLACE: your WhatsApp number, digits only with country code (used for
+  // both the tel: link and the wa.me custom-order link)
+  whatsapp: "923000000000",
+  whatsappDisplay: "+92 300 0000000",
+  // REPLACE: your studio city — shown in the footer and shipping copy
+  location: "Lahore, Pakistan",
 
-  // REPLACE: your social profiles
+  // REPLACE: your social profiles. `etsy` is your DIGITAL shop — kept
+  // clearly separate from this physical-tee storefront everywhere it appears.
   social: {
     instagram: "https://instagram.com/chapterbyemm",
     instagramHandle: "@chapterbyemm",
-    tiktok: "https://tiktok.com/@chapterbyemm",
     pinterest: "https://pinterest.com/chapterbyemm",
     facebook: "https://facebook.com/chapterbyemm",
+    etsy: "https://etsy.com/shop/chapterbyemm",
   },
 
-  // Currency + store settings
-  currency: "USD",
-  currencySymbol: "$",
-  taxRate: 0.13,            // 13% — set to 0 if you do not charge tax at checkout
-  freeShippingThreshold: 75, // free standard shipping over this amount
+  // Currency + store settings — Pakistan-first: PKR, no decimals shown.
+  currency: "PKR",
+  currencySymbol: "Rs. ",
+  taxRate: 0, // set a decimal (e.g. 0.05) if you ever need to add tax at checkout
+  freeShippingThreshold: 4000, // free standard delivery over this amount (PKR)
 
-  announcement: "Free shipping on orders over $75 · Printed & shipped in 2–4 business days",
+  // Shown in the announcement bar above the header on every page.
+  announcement: "Free shipping across Pakistan on orders above Rs. 4,000 · Cash on Delivery available",
+
+  // Default checkout country. Pakistan-only for now — see PAKISTAN_LOCATIONS
+  // below for the province/city lists used in the address form.
+  defaultCountry: "Pakistan",
 };
 
 /* --------------------------------------------------------------------------
-   2. SHIPPING OPTIONS  ←  REPLACE with your real carrier rates
+   2. DELIVERY OPTIONS  ←  REPLACE with your real courier rates once set
    -------------------------------------------------------------------------- */
 const SHIPPING_METHODS = [
-  { id: "standard", label: "Standard shipping", eta: "5–8 business days after printing", price: 6.5 },
-  { id: "express", label: "Express shipping", eta: "2–3 business days after printing", price: 14.0 },
-  { id: "pickup", label: "Local pickup", eta: "Ready in 2–4 business days", price: 0 },
+  { id: "standard", label: "Standard Delivery", eta: "3–6 business days, nationwide", price: 250 },
+  { id: "express", label: "Express Delivery", eta: "1–2 business days, major cities only", price: 450 },
 ];
 
 /* --------------------------------------------------------------------------
-   3. PROMO CODES  ←  add / remove your own codes
+   3. PAYMENT METHODS  ←  configure which of these you currently accept
+   -------------------------------------------------------------------------- */
+/*  `enabled: false` keeps a method visible but marked "coming soon" instead
+    of removing it — useful for Online Payment until a gateway is connected.
+    See the payment-placeholder note in checkout.html / initCheckout() in
+    assets/js/pages.js for where to wire up a real gateway (JazzCash, Easypaisa,
+    Stripe, etc). Nothing here processes a real payment yet. */
+const PAYMENT_METHODS = [
+  {
+    id: "cod",
+    label: "Cash on Delivery",
+    detail: "Pay in cash when your order arrives.",
+    enabled: true,
+  },
+  {
+    id: "bank",
+    label: "Bank Transfer",
+    detail: "Transfer to our account and send a screenshot on WhatsApp — details shown after you place your order.",
+    enabled: true,
+  },
+  {
+    id: "online",
+    label: "Online Payment (Card / JazzCash / Easypaisa)",
+    detail: "Coming soon — a secure payment gateway is being connected.",
+    enabled: false,
+  },
+];
+
+/* --------------------------------------------------------------------------
+   4. PAKISTAN LOCATIONS — used by the checkout address form
+   -------------------------------------------------------------------------- */
+const PAKISTAN_PROVINCES = [
+  "Punjab",
+  "Sindh",
+  "Khyber Pakhtunkhwa",
+  "Balochistan",
+  "Islamabad Capital Territory",
+  "Gilgit-Baltistan",
+  "Azad Jammu & Kashmir",
+];
+
+const PAKISTAN_CITIES = [
+  "Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad", "Multan",
+  "Peshawar", "Quetta", "Sialkot", "Gujranwala", "Hyderabad", "Bahawalpur",
+  "Sargodha", "Sukkur", "Abbottabad", "Mardan", "Other",
+];
+
+/* --------------------------------------------------------------------------
+   5. PROMO CODES  ←  add / remove your own codes
    -------------------------------------------------------------------------- */
 const PROMO_CODES = {
   NEWCHAPTER10: { type: "percent", value: 10, label: "10% off — welcome code" },
   EMM15: { type: "percent", value: 15, label: "15% off — community code" },
-  FREESHIP: { type: "shipping", value: 100, label: "Free standard shipping" },
+  FREESHIP: { type: "shipping", value: 100, label: "Free standard delivery" },
 };
 
 /* --------------------------------------------------------------------------
-   4. COLOURS AVAILABLE FOR PRINTING
+   6. COLOURS AVAILABLE FOR PRINTING
    `hex` is only used for the little swatch dots in the UI.
    -------------------------------------------------------------------------- */
 const COLORS = {
-  cream: { label: "Cream", hex: "#f4ede4" },
-  sand: { label: "Sand", hex: "#e0d0ba" },
-  black: { label: "Black", hex: "#221f1d" },
-  sage: { label: "Sage", hex: "#a9b6a3" },
-  clay: { label: "Clay", hex: "#c9a294" },
+  powder: { label: "Powder Blue", hex: "#cfdde9" },
+  terracotta: { label: "Terracotta", hex: "#c65440" },
+  kelly: { label: "Kelly Green", hex: "#2f9c4f" },
+  charcoal: { label: "Washed Black", hex: "#2c2c2a" },
+  cream: { label: "Cream", hex: "#f3efe6" },
+  sand: { label: "Soft Sand", hex: "#ddba8a" },
+  navy: { label: "Deep Navy", hex: "#173e47" },
   white: { label: "White", hex: "#ffffff" },
 };
 
 /* --------------------------------------------------------------------------
-   5. COLLECTIONS / CATEGORIES
-   `id` is what each product references in its `categories` array.
+   7. COLLECTIONS / CATEGORIES
+   `id` is what each product references in its `categories` array. All seven
+   are shown in the shop filters and on the Collections page even before they
+   hold products — an empty one shows a warm "new designs coming soon"
+   message instead of an empty grid, per the brand's editorial framing.
    -------------------------------------------------------------------------- */
 const COLLECTIONS = [
   {
-    id: "new-arrivals",
-    name: "New Arrivals",
+    id: "new-chapters",
+    name: "New Chapters",
     blurb: "The newest prints, fresh off the press.",
-    image: "assets/img/site/col-everyday.svg",
-  },
-  {
-    id: "best-sellers",
-    name: "Best Sellers",
-    blurb: "The tees our community keeps coming back for.",
-    image: "assets/img/site/col-bold.svg",
-  },
-  {
-    id: "mama",
-    name: "Mama Collection",
-    blurb: "For every stage of motherhood — soft, honest, wearable every day.",
-    image: "assets/img/site/col-mama.svg",
-  },
-  {
-    id: "inspirational",
-    name: "Inspirational Collection",
-    blurb: "Gentle reminders you can wear on the days you need them most.",
-    image: "assets/img/site/col-inspirational.svg",
+    image: "assets/img/products/doing-my-best-3.jpg",
   },
   {
     id: "everyday",
-    name: "Everyday Collection",
-    blurb: "Quiet, versatile basics with a small detail that feels like you.",
-    image: "assets/img/site/col-everyday.svg",
+    name: "Everyday",
+    blurb: "Quiet, versatile pieces you'll reach for on repeat.",
+    image: "assets/img/site/photo-coming-soon.jpg",
+  },
+  {
+    id: "mama",
+    name: "Mama",
+    blurb: "For every stage of motherhood — soft, honest, wearable every day.",
+    image: "assets/img/site/photo-coming-soon.jpg",
+  },
+  {
+    id: "inspired",
+    name: "Inspired",
+    blurb: "Gentle reminders you can wear on the days you need them most.",
+    image: "assets/img/products/calm-superpower-2.jpg",
   },
   {
     id: "bold",
-    name: "Bold / Statement Collection",
+    name: "Bold Statements",
     blurb: "Say it louder. Statement prints for the confident chapters.",
-    image: "assets/img/site/col-bold.svg",
+    image: "assets/img/products/keep-showing-up-2.jpg",
+  },
+  {
+    id: "limited",
+    name: "Limited Drops",
+    blurb: "Small-batch prints, gone once they're gone.",
+    image: "assets/img/products/stress-never-heard-2.jpg",
   },
   {
     id: "custom",
-    name: "Personalized / Custom T-Shirts",
-    blurb: "Your words, names or dates printed on our premium blanks.",
-    image: "assets/img/site/col-custom.svg",
+    name: "Custom",
+    blurb: "Your words, your idea, printed on our blanks.",
+    image: "assets/img/site/photo-coming-soon.jpg",
   },
 ];
 
 /* --------------------------------------------------------------------------
-   6. PRODUCTS  ←  REPLACE with your real T-shirts
+   8. PRODUCTS  ←  REPLACE with your real T-shirts and PKR prices
    -------------------------------------------------------------------------- */
 /*  HOW TO ADD A PRODUCT
     ---------------------
     id          : unique url-safe slug (used in the product page link)
     name        : product title
-    price       : number, no currency symbol
+    price       : number in PKR, no currency symbol or commas
     compareAt   : optional original price (shows as a strike-through) or null
     categories  : any ids from COLLECTIONS above
     images      : 1–4 image paths. Put your photos in assets/img/products/
                   and point to them here (.jpg / .webp / .png all fine).
     colors      : keys from COLORS above
     sizes       : available sizes; put a size in `soldOut` to cross it out
-    badge       : "New", "Best seller", "Limited" … or null
+    badge       : "New", "Best Seller", "Limited" … or null
     description : short paragraph shown on the card + product page
-    fabric / fit / care : shown in the product page accordions
+
+    fabric / fit / care : shown in the "Made With Intention" section on the
+    product page. Written here as honest placeholders — replace each with
+    your exact fabric composition, GSM, print method and care instructions
+    once confirmed. Do not leave invented specifics (like "100% organic
+    cotton") unless that is actually true of your blanks.
+
     rating / reviewCount: shown under the title
 */
 const SIZES_ALL = ["XS", "S", "M", "L", "XL", "XXL"];
 
 const PRODUCTS = [
   {
-    id: "every-new-chapter-tee",
-    name: "Every New Chapter Tee",
-    price: 34,
+    id: "stress-never-heard-of-her-tee",
+    name: "Stress? Never Heard of Her Tee",
+    price: 2400,
     compareAt: null,
-    categories: ["new-arrivals", "best-sellers", "inspirational"],
+    categories: ["new-chapters", "bold"],
     images: [
-      "assets/img/products/every-new-chapter-1.svg",
-      "assets/img/products/every-new-chapter-2.svg",
-      "assets/img/products/every-new-chapter-3.svg",
+      "assets/img/products/stress-never-heard-1.jpg",
+      "assets/img/products/stress-never-heard-2.jpg",
+      "assets/img/products/stress-never-heard-3.jpg",
     ],
-    colors: ["cream", "sand", "black"],
-    sizes: SIZES_ALL,
-    soldOut: [],
-    badge: "Best seller",
-    description:
-      "The tee that started it all. A soft, relaxed crewneck printed with a quiet reminder that every ending is also a beginning.",
-    fabric: "100% combed ring-spun cotton, 180 gsm. Pre-shrunk, medium weight with a soft hand-feel.",
-    fit: "Relaxed unisex fit with a straight hem and ribbed collar. Sits true to size — size down for a closer fit.",
-    care: "Machine wash cold inside out with like colours. Tumble dry low or hang to dry. Warm iron on the reverse only. Do not iron directly on the print. Do not bleach or dry clean.",
-    rating: 4.9,
-    reviewCount: 128,
-  },
-  {
-    id: "mama-est-always-tee",
-    name: "Mama, Est. Always Tee",
-    price: 36,
-    compareAt: 42,
-    categories: ["new-arrivals", "best-sellers", "mama"],
-    images: [
-      "assets/img/products/mama-est-always-1.svg",
-      "assets/img/products/mama-est-always-2.svg",
-      "assets/img/products/mama-est-always-3.svg",
-    ],
-    colors: ["sand", "cream", "clay"],
-    sizes: SIZES_ALL,
-    soldOut: ["XS"],
-    badge: "Best seller",
-    description:
-      "A warm, understated tribute to motherhood — printed in a soft serif on our most-loved sand blank. A favourite baby-shower gift.",
-    fabric: "100% organic combed cotton, 185 gsm. Breathable, opaque and beautifully soft after the first wash.",
-    fit: "Classic straight fit through the body with a slightly dropped shoulder. True to size.",
-    care: "Machine wash cold inside out. Hang to dry to protect the print. Warm iron on the reverse. No bleach, no dry cleaning.",
-    rating: 5.0,
-    reviewCount: 96,
-  },
-  {
-    id: "soft-heart-loud-mind-tee",
-    name: "Soft Heart, Loud Mind Tee",
-    price: 35,
-    compareAt: null,
-    categories: ["new-arrivals", "bold"],
-    images: [
-      "assets/img/products/soft-heart-1.svg",
-      "assets/img/products/soft-heart-2.svg",
-      "assets/img/products/soft-heart-3.svg",
-    ],
-    colors: ["black", "cream"],
+    colors: ["powder"],
     sizes: SIZES_ALL,
     soldOut: [],
     badge: "New",
     description:
-      "High-contrast print on a heavyweight black blank. For the chapter where you stop apologising for taking up space.",
-    fabric: "100% cotton, 220 gsm heavyweight jersey with a structured drape that holds its shape.",
-    fit: "Boxy oversized fit with wide sleeves. Size down for a standard fit.",
-    care: "Machine wash cold inside out. Tumble dry low. Do not iron the print directly.",
-    rating: 4.8,
-    reviewCount: 54,
-  },
-  {
-    id: "everyday-essential-tee",
-    name: "Everyday Essential Tee",
-    price: 29,
-    compareAt: null,
-    categories: ["everyday", "best-sellers"],
-    images: [
-      "assets/img/products/everyday-essential-1.svg",
-      "assets/img/products/everyday-essential-2.svg",
-      "assets/img/products/everyday-essential-3.svg",
-    ],
-    colors: ["cream", "white", "sage", "black"],
-    sizes: SIZES_ALL,
-    soldOut: [],
-    badge: null,
-    description:
-      "The small-print tee you will reach for on repeat. Minimal lowercase lettering, printed centre-chest on a lightweight blank.",
-    fabric: "Cotton-modal blend, 160 gsm. Lightweight with a subtle sheen and excellent drape.",
-    fit: "Semi-fitted with a slightly tapered waist and shorter sleeve. True to size.",
-    care: "Machine wash cold. Hang to dry. Warm iron on the reverse.",
-    rating: 4.7,
-    reviewCount: 211,
-  },
-  {
-    id: "bloom-slowly-tee",
-    name: "Bloom Slowly Tee",
-    price: 34,
-    compareAt: null,
-    categories: ["new-arrivals", "inspirational"],
-    images: [
-      "assets/img/products/bloom-slowly-1.svg",
-      "assets/img/products/bloom-slowly-2.svg",
-      "assets/img/products/bloom-slowly-3.svg",
-    ],
-    colors: ["sage", "cream", "sand"],
-    sizes: SIZES_ALL,
-    soldOut: ["XXL"],
-    badge: "New",
-    description:
-      "A muted sage tee with a hand-lettered reminder that growth is not a race. Printed with soft water-based ink.",
-    fabric: "100% combed ring-spun cotton, 180 gsm, garment-dyed for a lived-in colour.",
-    fit: "Relaxed unisex fit. Size down if you prefer a closer silhouette.",
-    care: "Wash cold inside out with like colours — garment-dyed cotton may soften in tone over time. Hang to dry.",
+      "An unbothered little cat and a very big mood, printed on a soft powder-blue oversized tee. The one people stop you about.",
+    fabric: "[EDIT] Add your exact fabric composition and GSM here — e.g. 100% cotton, 200 gsm.",
+    fit: "Oversized fit with a dropped shoulder and wide sleeve, styled here tucked at the front. [EDIT] Confirm true-to-size guidance once you have customer feedback.",
+    care: "[EDIT] Add your confirmed wash and care instructions here.",
     rating: 4.9,
-    reviewCount: 73,
+    reviewCount: 41,
   },
   {
-    id: "mama-mode-on-tee",
-    name: "Mama Mode: On Tee",
-    price: 34,
+    id: "im-doing-my-best-tee",
+    name: "I'm Doing My Best Tee",
+    price: 2400,
     compareAt: null,
-    categories: ["mama", "bold"],
+    categories: ["new-chapters", "inspired"],
     images: [
-      "assets/img/products/mama-mode-on-1.svg",
-      "assets/img/products/mama-mode-on-2.svg",
-      "assets/img/products/mama-mode-on-3.svg",
+      "assets/img/products/doing-my-best-1.jpg",
+      "assets/img/products/doing-my-best-2.jpg",
+      "assets/img/products/doing-my-best-3.jpg",
     ],
-    colors: ["clay", "cream", "black"],
-    sizes: SIZES_ALL,
-    soldOut: [],
-    badge: null,
-    description:
-      "Playful, a little bit tired, entirely honest. Printed on a warm clay blank that hides the realities of snack time.",
-    fabric: "100% cotton, 190 gsm. Soft, opaque and durable through repeated washing.",
-    fit: "Relaxed fit with a curved hem that sits well over leggings and jeans alike.",
-    care: "Machine wash cold inside out. Tumble dry low. Do not bleach.",
-    rating: 4.8,
-    reviewCount: 61,
-  },
-  {
-    id: "she-chose-herself-tee",
-    name: "She Chose Herself Tee",
-    price: 36,
-    compareAt: null,
-    categories: ["bold", "best-sellers"],
-    images: [
-      "assets/img/products/she-chose-herself-1.svg",
-      "assets/img/products/she-chose-herself-2.svg",
-      "assets/img/products/she-chose-herself-3.svg",
-    ],
-    colors: ["black", "cream", "clay"],
-    sizes: SIZES_ALL,
-    soldOut: [],
-    badge: "Best seller",
-    description:
-      "For the chapter you wrote for yourself. Bold serif print with a small lowercase detail beneath — quietly triumphant.",
-    fabric: "100% cotton, 220 gsm heavyweight jersey with reinforced shoulder seams.",
-    fit: "Oversized drop-shoulder fit. Wear as-is or tuck at the front.",
-    care: "Machine wash cold inside out. Hang to dry. Warm iron on the reverse only.",
-    rating: 4.9,
-    reviewCount: 142,
-  },
-  {
-    id: "quiet-mornings-tee",
-    name: "Quiet Mornings Tee",
-    price: 31,
-    compareAt: null,
-    categories: ["everyday", "new-arrivals"],
-    images: [
-      "assets/img/products/quiet-mornings-1.svg",
-      "assets/img/products/quiet-mornings-2.svg",
-      "assets/img/products/quiet-mornings-3.svg",
-    ],
-    colors: ["cream", "sage", "white"],
+    colors: ["terracotta"],
     sizes: SIZES_ALL,
     soldOut: [],
     badge: "New",
     description:
-      "Small lowercase print, generous body, endlessly wearable. Made for slow coffee and unhurried starts.",
-    fabric: "Cotton-modal blend, 165 gsm. Lightweight and breathable with a fluid drape.",
-    fit: "Relaxed straight fit with a mid-length sleeve. True to size.",
-    care: "Machine wash cold. Hang to dry. Cool iron on the reverse.",
-    rating: 4.7,
-    reviewCount: 48,
-  },
-  {
-    id: "chapter-one-oversized-tee",
-    name: "Chapter One Oversized Tee",
-    price: 38,
-    compareAt: null,
-    categories: ["best-sellers", "inspirational"],
-    images: [
-      "assets/img/products/chapter-one-1.svg",
-      "assets/img/products/chapter-one-2.svg",
-      "assets/img/products/chapter-one-3.svg",
-    ],
-    colors: ["sand", "cream", "black"],
-    sizes: SIZES_ALL,
-    soldOut: ["S"],
-    badge: "Limited",
-    description:
-      "Our most generous silhouette, printed with a single quiet line. The tee people ask about in the grocery store.",
-    fabric: "100% cotton, 230 gsm boxy heavyweight jersey. Substantial without being stiff.",
-    fit: "True oversized fit with a wide body and dropped sleeve. Size down one for a relaxed-normal fit.",
-    care: "Machine wash cold inside out. Tumble dry low or hang to dry. Do not iron directly on the print.",
+      "A retro tulip square in butter and cream on warm terracotta — a quiet, generous permission slip for the days that ask a lot of you.",
+    fabric: "[EDIT] Add your exact fabric composition and GSM here.",
+    fit: "Relaxed oversized fit with a straight body and short dropped sleeve. [EDIT] Confirm true-to-size guidance.",
+    care: "[EDIT] Add your confirmed wash and care instructions here.",
     rating: 5.0,
-    reviewCount: 89,
+    reviewCount: 33,
   },
   {
-    id: "grace-over-grind-tee",
-    name: "Grace Over Grind Tee",
-    price: 34,
+    id: "keep-showing-up-tee",
+    name: "Keep Showing Up Tee",
+    price: 2600,
     compareAt: null,
-    categories: ["inspirational", "everyday"],
+    categories: ["new-chapters", "inspired", "bold"],
     images: [
-      "assets/img/products/grace-over-grind-1.svg",
-      "assets/img/products/grace-over-grind-2.svg",
-      "assets/img/products/grace-over-grind-3.svg",
+      "assets/img/products/keep-showing-up-1.jpg",
+      "assets/img/products/keep-showing-up-2.jpg",
     ],
-    colors: ["cream", "sand", "sage"],
+    colors: ["charcoal"],
     sizes: SIZES_ALL,
     soldOut: [],
-    badge: null,
+    badge: "New",
     description:
-      "A soft answer to hustle culture, printed in a delicate serif. One of our most-gifted designs.",
-    fabric: "100% combed ring-spun cotton, 180 gsm. Pre-shrunk and pleasantly soft from the first wear.",
-    fit: "Classic unisex fit. True to size.",
-    care: "Machine wash cold inside out. Hang to dry. Warm iron on the reverse.",
-    rating: 4.8,
-    reviewCount: 77,
-  },
-  {
-    id: "mama-of-littles-custom-tee",
-    name: "Mama of Littles — Personalized Tee",
-    price: 42,
-    compareAt: null,
-    categories: ["custom", "mama"],
-    images: [
-      "assets/img/products/mama-of-littles-1.svg",
-      "assets/img/products/mama-of-littles-2.svg",
-      "assets/img/products/mama-of-littles-3.svg",
-    ],
-    colors: ["sage", "cream", "sand", "black"],
-    sizes: SIZES_ALL,
-    soldOut: [],
-    badge: "Personalized",
-    description:
-      "Add your children's names beneath the print. We set the type by hand and send you a proof before we print.",
-    fabric: "100% organic combed cotton, 185 gsm. Soft, opaque and built to last.",
-    fit: "Relaxed unisex fit with a straight hem. True to size.",
-    care: "Machine wash cold inside out. Hang to dry to protect the personalised print. Warm iron on the reverse.",
-    rating: 5.0,
-    reviewCount: 34,
-    personalized: true,
-    personalizationLabel: "Names to print (separate with commas)",
-  },
-  {
-    id: "your-words-custom-tee",
-    name: "Your Words — Custom Printed Tee",
-    price: 44,
-    compareAt: null,
-    categories: ["custom"],
-    images: [
-      "assets/img/products/your-words-custom-1.svg",
-      "assets/img/products/your-words-custom-2.svg",
-      "assets/img/products/your-words-custom-3.svg",
-    ],
-    colors: ["cream", "black", "sand", "clay"],
-    sizes: SIZES_ALL,
-    soldOut: [],
-    badge: "Personalized",
-    description:
-      "Your own line of text, set in one of our signature typefaces and printed on a premium blank. Proof approved by you before printing.",
-    fabric: "100% combed ring-spun cotton, 180 gsm. Pre-shrunk medium weight.",
-    fit: "Relaxed unisex fit. True to size.",
-    care: "Machine wash cold inside out. Hang to dry. Do not iron directly on the print.",
+      "Ornate cream lettering on a washed black blank — the most-worn thing in the studio. Reads as smart with linen, easy with denim.",
+    fabric: "[EDIT] Add your exact fabric composition and GSM here.",
+    fit: "Relaxed oversized fit with a dropped shoulder, true to size for the look pictured. [EDIT] Confirm sizing guidance.",
+    care: "[EDIT] Add your confirmed wash and care instructions here.",
     rating: 4.9,
     reviewCount: 27,
-    personalized: true,
-    personalizationLabel: "Text to print (up to 30 characters)",
+  },
+  {
+    id: "calm-is-a-superpower-tee",
+    name: "Calm Is a Superpower Tee",
+    price: 2200,
+    compareAt: null,
+    categories: ["new-chapters", "inspired"],
+    images: [
+      "assets/img/products/calm-superpower-1.jpg",
+      "assets/img/products/calm-superpower-2.jpg",
+    ],
+    colors: ["kelly"],
+    sizes: SIZES_ALL,
+    soldOut: [],
+    badge: "New",
+    description:
+      "Hand-lettered script inside a ring of red and marigold florals, printed on true kelly green. The brightest thing in the collection, and the calmest sentiment.",
+    fabric: "[EDIT] Add your exact fabric composition and GSM here.",
+    fit: "Our most fitted cut — a classic straight fit with a set-in sleeve. [EDIT] Confirm true-to-size guidance.",
+    care: "[EDIT] Add your confirmed wash and care instructions here.",
+    rating: 4.8,
+    reviewCount: 19,
   },
 ];
 
 /* --------------------------------------------------------------------------
-   7. CUSTOMER REVIEWS (homepage + product pages)
+   9. CUSTOMER REVIEWS (homepage + product pages)
+   Replace these with real reviews as they come in — keep the tone specific
+   and low-key rather than generic, so they read as authentic.
    -------------------------------------------------------------------------- */
 const REVIEWS = [
   {
     stars: 5,
-    text: "The fabric is so much nicer than I expected — thick, soft and the print still looks brand new after a dozen washes.",
-    name: "Amara O.",
-    detail: "Every New Chapter Tee · Size M",
+    text: "The fabric is so much nicer than I expected, and the print still looks brand new after several washes.",
+    name: "Amara K.",
+    detail: "Stress? Never Heard of Her Tee · Size M",
   },
   {
     stars: 5,
-    text: "Bought the Mama tee for my sister and immediately ordered one for myself. The colour is exactly like the photos.",
-    name: "Jess R.",
-    detail: "Mama, Est. Always Tee · Size L",
+    text: "The terracotta is exactly like the photos, which never happens. I've worn it three times in one week.",
+    name: "Jaweria R.",
+    detail: "I'm Doing My Best Tee · Size L",
   },
   {
     stars: 5,
-    text: "Emm sent me a proof of my custom text within a day and it arrived beautifully packaged. Genuinely thoughtful service.",
+    text: "Arrived beautifully packaged and the lettering is so crisp. Genuinely thoughtful service from a small brand.",
     name: "Priya S.",
-    detail: "Your Words Custom Tee · Size S",
+    detail: "Keep Showing Up Tee · Size S",
   },
   {
     stars: 4,
-    text: "Fits oversized exactly as described. I sized down and it is now the tee I wear every single weekend.",
-    name: "Danielle K.",
-    detail: "Chapter One Oversized Tee · Size M",
+    text: "Runs oversized exactly as described. I sized down and it's now my every-weekend tee.",
+    name: "Danya M.",
+    detail: "I'm Doing My Best Tee · Size M",
   },
 ];
 
 /* --------------------------------------------------------------------------
-   8. SIZE CHART (body measurements, in inches)
+   10. SIZE GUIDE (body measurements, in inches) — used by size-guide.html
+   and the "Size Guide" link on each product page.
    -------------------------------------------------------------------------- */
 const SIZE_CHART = [
   { size: "XS", chest: "32–34", length: "26", sleeve: "7.5" },
@@ -467,7 +352,40 @@ const SIZE_CHART = [
 ];
 
 /* --------------------------------------------------------------------------
-   9. FAQ CONTENT (used by faq.html)
+   11. THE CHAPTER JOURNAL — editorial posts shown on journal.html
+   -------------------------------------------------------------------------- */
+const JOURNAL_POSTS = [
+  {
+    slug: "how-it-started",
+    title: "How ChapterByEmm Started",
+    excerpt: "A women's health physiotherapist by day, and how a quiet love for art turned into a small creative business.",
+    image: "assets/img/products/doing-my-best-2.jpg",
+    date: "2025",
+    body:
+      "Every chapter in life begins with a small step, and this is mine. ChapterByEmm grew out of a quiet, long-held love for art and painting that stayed in the background for years — until one day I decided to give it a space of its own. This journal is where I'll share the thinking behind new designs, what a piece is meant to say, and the small, ordinary parts of building something from scratch.",
+  },
+  {
+    slug: "styling-oversized-tees",
+    title: "Styling an Oversized Tee, Three Ways",
+    excerpt: "Notes on wearing the drop-shoulder fit — tucked, layered, and on its own.",
+    image: "assets/img/products/stress-never-heard-3.jpg",
+    date: "2025",
+    body:
+      "[EDIT] Replace this with your own styling notes and photos once you have them. A few starting angles: tucked into wide-leg jeans with a low bun, layered under an open shirt for cooler weather, or worn oversized with straight trousers and trainers for an easy everyday look.",
+  },
+  {
+    slug: "behind-the-print",
+    title: "Behind the Print: I'm Doing My Best",
+    excerpt: "Where the tulip motif came from, and why terracotta felt like the right colour for this one.",
+    image: "assets/img/products/doing-my-best-1.jpg",
+    date: "2025",
+    body:
+      "[EDIT] Replace this with the real story behind this design — the sketch it started as, why you chose this palette, and what you hope someone feels wearing it.",
+  },
+];
+
+/* --------------------------------------------------------------------------
+   12. FAQ CONTENT (used by faq.html)
    -------------------------------------------------------------------------- */
 const FAQ_GROUPS = [
   {
@@ -475,15 +393,15 @@ const FAQ_GROUPS = [
     items: [
       {
         q: "How do your T-shirts fit?",
-        a: "Most of our tees are a relaxed unisex fit and run true to size. Styles marked oversized (like the Chapter One Oversized Tee) are intentionally roomy — size down one if you prefer a standard fit. Every product page lists the exact fit for that style, and the full size chart in body measurements is on each product page under “Size & fit”.",
+        a: "Most of our tees are a relaxed or oversized unisex fit and run true to size. The oversized styles are intentionally roomy — size down one if you prefer a standard fit. The Calm Is a Superpower Tee is our most fitted cut. Full body measurements for every size are on the Size Guide page and under “Size & fit” on each product page.",
       },
       {
         q: "I'm between two sizes — which should I choose?",
-        a: "Size up for a looser, more draped look, or size down for a closer fit. If you are unsure, email us your usual size and height and we will recommend the best option for that specific style.",
+        a: "Size up for a looser, more draped look, or size down for a closer fit. If you're unsure, message us on WhatsApp with your usual size and height and we'll recommend the best option for that specific style.",
       },
       {
         q: "Do you offer plus sizes?",
-        a: "Our current range runs XS to XXL. We are actively working on extending the range and you can email us to be told first when larger sizes arrive.",
+        a: "Our current range runs XS to XXL. We're actively working on extending the range — message us to be told first when larger sizes arrive.",
       },
     ],
   },
@@ -492,15 +410,15 @@ const FAQ_GROUPS = [
     items: [
       {
         q: "What fabric are the T-shirts made from?",
-        a: "Depending on the style, we print on 100% combed ring-spun cotton (160–230 gsm) or a cotton-modal blend. Every product page lists the exact fabric, weight and feel so you know precisely what you are buying.",
+        a: "[EDIT] Add your confirmed fabric composition and weight here. Every product page also lists the fabric for that specific style once confirmed.",
       },
       {
         q: "How are the designs printed?",
-        a: "Every tee is printed with professional-grade water-based and DTG inks that sit into the fabric rather than on top of it. The result is a soft print with no plasticky feel that will not crack or peel with proper care.",
+        a: "[EDIT] Add your confirmed print method here (e.g. DTG, screen print, vinyl) so customers know exactly what they're buying.",
       },
       {
         q: "Will the print fade?",
-        a: "Not with normal care. Wash cold, inside out, and hang to dry and your print will stay crisp for years. The most common cause of fading is a hot dryer.",
+        a: "[EDIT] Add your guidance here once you've confirmed how the print holds up with normal washing.",
       },
     ],
   },
@@ -509,11 +427,11 @@ const FAQ_GROUPS = [
     items: [
       {
         q: "How should I wash my tee?",
-        a: "Machine wash cold, inside out, with like colours. Tumble dry low or hang to dry. Warm iron on the reverse only, never directly on the print. No bleach and no dry cleaning.",
+        a: "[EDIT] Add your confirmed washing and care instructions here — this should match the care label on your actual blanks.",
       },
       {
         q: "Will it shrink?",
-        a: "Our cotton blanks are pre-shrunk, so expect minimal shrinkage. Washing cold and avoiding a hot dryer keeps the fit exactly as it arrived.",
+        a: "[EDIT] Add your guidance here once confirmed with your fabric supplier.",
       },
     ],
   },
@@ -521,20 +439,20 @@ const FAQ_GROUPS = [
     title: "Shipping & delivery",
     items: [
       {
-        q: "How long until my order ships?",
-        a: "Each tee is printed to order. Printing and quality-checking takes 2–4 business days, then your parcel is handed to the carrier. Personalised orders take 3–5 business days because we send you a proof first.",
+        q: "Do you deliver across Pakistan?",
+        a: "Yes — we ship nationwide. Standard delivery typically takes 3–6 business days depending on your city; express delivery (1–2 business days) is available for major cities. See the Shipping & Delivery page for full details.",
       },
       {
-        q: "What are your delivery times?",
-        a: "Standard shipping arrives 5–8 business days after printing; express arrives in 2–3 business days. Local pickup is ready as soon as printing is complete. International delivery typically takes 10–20 business days depending on customs.",
+        q: "How much is delivery?",
+        a: "Standard delivery is Rs. 250 and express is Rs. 450. Standard delivery is free on orders above Rs. 4,000. [EDIT] Confirm these rates once you've finalised a courier.",
       },
       {
-        q: "How much is shipping?",
-        a: "Standard shipping is a flat $6.50 and express is $14.00. Standard shipping is free on all orders over $75. Any customs duties on international parcels are the responsibility of the recipient.",
+        q: "Can I pay Cash on Delivery?",
+        a: "Yes — Cash on Delivery is available nationwide. Bank Transfer is also accepted; online card/wallet payment is coming soon.",
       },
       {
-        q: "Can I track my parcel?",
-        a: "Yes. As soon as your order leaves the studio you will receive an email with a tracking number and a link to follow it.",
+        q: "Can I track my order?",
+        a: "[EDIT] Add your tracking process here once you've confirmed it with your courier.",
       },
     ],
   },
@@ -543,28 +461,28 @@ const FAQ_GROUPS = [
     items: [
       {
         q: "What is your returns policy?",
-        a: "Unworn, unwashed tees in their original condition can be returned within 30 days of delivery. Email us with your order number and we will send return instructions. Return shipping is covered by the customer unless the item arrived damaged or incorrect.",
+        a: "[EDIT] Add your confirmed return window and conditions here. See the Returns & Exchanges page for the full policy.",
       },
       {
         q: "Can I exchange for a different size?",
-        a: "Absolutely. Email us within 30 days and we will reserve your new size while your original tee is on its way back to us.",
+        a: "[EDIT] Add your confirmed size-exchange process here.",
       },
       {
-        q: "Are personalised tees returnable?",
-        a: "Because personalised tees are printed with your specific text, they can only be returned if there is a fault or a printing error on our side — which is exactly why we send you a proof to approve before printing.",
+        q: "Are custom tees returnable?",
+        a: "Because custom tees are printed to your exact request, they can only be returned if there's a fault or a printing error on our side — which is why we confirm every design with you before printing.",
       },
     ],
   },
   {
-    title: "Custom & personalised orders",
+    title: "Custom orders",
     items: [
       {
         q: "Can you print my own idea?",
-        a: "Yes — that is what our Custom Designs page is for. Send us your idea, wording, preferred style, size and colour, and we will reply within 1–2 business days with a mock-up and a quote.",
+        a: "Yes — that's what the Custom page is for. Send us your idea, wording, preferred style, size and colour and we'll reply on WhatsApp or email with a mock-up and a quote.",
       },
       {
         q: "Do you take bulk or group orders?",
-        a: "We do: family reunions, baby showers, small businesses and team gifts. Tell us your quantity on the Custom Designs form and we will send you tiered pricing.",
+        a: "We do — family occasions, small businesses and group gifts. Tell us your quantity on the Custom form and we'll send tiered pricing.",
       },
     ],
   },
@@ -573,15 +491,11 @@ const FAQ_GROUPS = [
     items: [
       {
         q: "My order arrived damaged or incorrect — what now?",
-        a: "We are sorry. Email us a photo within 7 days of delivery and we will reprint and reship your tee at no cost to you.",
+        a: "We're sorry. Message us a photo on WhatsApp or email within 7 days of delivery and we'll sort out a reprint or replacement at no extra cost.",
       },
       {
         q: "Can I change or cancel my order?",
-        a: "If your tee has not gone to print yet, yes. Email us as soon as possible with your order number — most changes are possible within the first 24 hours.",
-      },
-      {
-        q: "I never received an order confirmation.",
-        a: "Check your spam folder first, then email us with the name and address you used and we will resend it.",
+        a: "If your tee hasn't gone to print yet, yes — message us as soon as possible with your order details.",
       },
     ],
   },

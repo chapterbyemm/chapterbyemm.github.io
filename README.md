@@ -1,208 +1,199 @@
-# ChapterByEmm — website
+# ChapterByEmm — how to finish setting up your site
 
-A complete, responsive storefront for **physical printed T-shirts**. Plain HTML, CSS and
-JavaScript — no build step, no dependencies. Open `index.html` in a browser and it works.
-
----
-
-## 1. Run it locally
-
-Double-clicking `index.html` works, but product links use `?id=…`, so a tiny local server
-behaves best:
-
-```bash
-cd chapterbyemm
-python3 -m http.server 8000
-# then open http://localhost:8000
-```
-
-## 2. Files
-
-```
-chapterbyemm/
-├── index.html            Homepage (hero, featured, new arrivals, collections,
-│                         best sellers, story, reviews, Instagram, newsletter)
-├── shop.html             All T-shirts + collection / size / colour filters, sort, search
-├── product.html          Product detail page — links look like product.html?id=PRODUCT_ID
-├── collections.html      All seven collections
-├── cart.html             Full cart page
-├── checkout.html         Shipping address, delivery, promo code, payment placeholder
-├── wishlist.html         Saved items
-├── about.html            About ChapterByEmm
-├── custom-designs.html   Custom / personalised request form
-├── faq.html              FAQ with live search
-├── contact.html          Contact form + email + social links
-├── robots.txt            ← replace the domain
-├── sitemap.xml           ← replace the domain
-└── assets/
-    ├── css/styles.css    All styling. Colours + fonts are at the very top.
-    ├── js/data.js        ★ YOUR CONTENT: products, prices, images, shipping, promo codes
-    ├── js/components.js  Header, nav, cart drawer, footer, product card
-    ├── js/pages.js       Page behaviour (shop filters, product page, cart, checkout, FAQ)
-    ├── js/app.js         Cart/wishlist storage, totals, toasts, form handling
-    └── img/
-        ├── products/     ★ REPLACE with your product photos
-        └── site/         ★ REPLACE hero, story, collection and Instagram images
-```
-
-`data.js` is the file you'll live in. Nothing else needs editing for day-to-day changes.
+**You do not need to know any code for most of this.** Everything below happens
+on GitHub, in your browser. The one exception (connecting a payment gateway) is
+called out clearly so you know to hire help for just that part.
 
 ---
 
-## 3. What to replace before launch
+## Step 1 — Upload your logo
 
-### Products, prices, images → `assets/js/data.js`
-Each product looks like this:
+Save a **square crop of just the circular mark** (no text underneath) as
+`logo.png`, then:
 
-```js
-{
-  id: "every-new-chapter-tee",        // used in the URL: product.html?id=…
-  name: "Every New Chapter Tee",
-  price: 34,                          // number only, no $
-  compareAt: null,                    // or 42 to show a strike-through price
-  categories: ["new-arrivals", "best-sellers", "inspirational"],
-  images: [                           // 1–4 images; first one is the card image
-    "assets/img/products/every-new-chapter-1.svg",
-    "assets/img/products/every-new-chapter-2.svg",
-  ],
-  colors: ["cream", "sand", "black"],  // keys from the COLORS list above it
-  sizes: ["XS","S","M","L","XL","XXL"],
-  soldOut: ["XS"],                     // crossed out on the product page
-  badge: "Best seller",                // or "New" / "Limited" / null
-  description: "…",                    // card + product page
-  fabric: "…", fit: "…", care: "…",    // product page accordions
-  rating: 4.9, reviewCount: 128,
-  personalized: true,                  // optional: adds a "text to print" field
-  personalizationLabel: "Names to print",
-}
-```
+1. Click this folder: **[assets/img/site](assets/img/site)**
+2. Green **Add file** button → **Upload files**
+3. Drag `logo.png` in → **Commit changes**
 
-Copy a block, change the values, done. Delete a block to remove a product.
-
-### Product photos → `assets/img/products/`
-The placeholders are `.svg` mock-ups. Drop your real photos in the same folder and point
-each product's `images` array at them. `.webp` is ideal, `.jpg` is fine.
-**Recommended: 900 × 1100 px (4:5 portrait)**, all products shot the same way so the grid
-looks even. Keep files under ~200 KB each.
-
-Site imagery lives in `assets/img/site/` — `hero.svg`, `story.svg`, `about-hero.svg`,
-`custom-hero.svg`, `col-*.svg` (collection covers) and `ig-1…6.svg` (Instagram tiles).
-
-### Brand email, phone, socials → top of `assets/js/data.js` (the `SITE` object)
-Also hard-coded in two spots for SEO reasons — search for `hello@chapterbyemm.com` and
-`instagram.com/chapterbyemm` in `contact.html` and `index.html` and swap them.
-
-### Shipping rates → `SHIPPING_METHODS` in `data.js`
-Change the labels, delivery estimates and prices. `SITE.freeShippingThreshold` sets the
-free-shipping cut-off and `SITE.taxRate` sets the estimated tax (use `0` to hide tax).
-
-### Promo codes → `PROMO_CODES` in `data.js`
-```js
-NEWCHAPTER10: { type: "percent", value: 10, label: "10% off — welcome code" },
-SAVE5:        { type: "fixed",   value: 5,  label: "$5 off" },
-FREESHIP:     { type: "shipping", value: 100, label: "Free standard shipping" },
-```
-
-### Collections → `COLLECTIONS` in `data.js`
-Add or rename edits here and the shop filters, collections page, homepage and footer all
-update themselves.
-
-### Navigation → `NAV` at the top of `assets/js/components.js`
-One array, applied to every page's header, mobile menu and footer.
-
-### Colours & fonts → top of `assets/css/styles.css`
-Every colour is a CSS variable in `:root`. Change `--clay` and `--sand` and the whole site
-re-skins. Fonts are `--font-display` (Cormorant Garamond) and `--font-body` (Inter), both
-loaded from Google Fonts in each page's `<head>`.
-
-### Domain → `robots.txt`, `sitemap.xml`, and the `<link rel="canonical">` in each page
-Search for `chapterbyemm.com` and replace with your real domain.
+It appears in the header next to the brand name, in the footer, and as the
+browser-tab icon. Until you upload it, the site just shows the brand name in
+type — nothing looks broken.
 
 ---
 
-## 4. Connecting the things that need a backend
+## Step 2 — Upload the T-shirt photos
 
-Three places are deliberately left as placeholders. Each one is marked with a comment.
+Rename each photo to the exact filename in the table below, then upload them
+all at once to **[assets/img/products](assets/img/products)** (same steps as
+above — you can drag all 10 in together).
 
-**1. Payments** — `checkout.html` (the `PAYMENT INTEGRATION PLACEHOLDER` block) and
-`assets/js/pages.js` → `initCheckout()` (the `CONNECT YOUR PAYMENT PROVIDER HERE` block).
-Right now "Place order" validates the form and shows a confirmation screen without
-charging anything. To go live, use a hosted checkout so you never touch raw card numbers:
+### Stress? Never Heard of Her Tee — powder blue, black cat
 
-```js
-const res = await fetch("/api/create-checkout-session", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ items: Store.cart, email: data.email }),
-});
-const { url } = await res.json();
-location.href = url;   // Stripe / PayPal hosted page
-```
-
-Easiest options: **Stripe Checkout**, **PayPal Smart Buttons**, or **Snipcart / Shopify
-Buy Buttons** if you'd rather not run a server at all.
-
-**2. Forms** (newsletter, contact, custom design) — `assets/js/app.js` → `initForms()`.
-They currently validate and show a success message, logging the data to the browser
-console. Point them at Formspree, Basin, Netlify Forms, Mailchimp or Klaviyo:
-
-```js
-fetch("https://formspree.io/f/YOUR_ID", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data),
-});
-```
-
-**3. Cart storage** — `Store.read()` / `Store.write()` in `app.js` use `localStorage`, so
-carts survive a refresh on the same device. Swap those two functions for API calls if you
-later want carts to follow a logged-in customer.
-
----
-
-## 5. Hosting
-
-It's a static site, so all of these are free and take minutes:
-
-- **Netlify** — drag the `chapterbyemm` folder onto app.netlify.com/drop
-- **Vercel** — `vercel deploy`
-- **GitHub Pages** — push the folder, enable Pages in the repo settings
-- **Cloudflare Pages** — connect the repo, no build command needed
-
-Add your custom domain in the host's dashboard, then submit `sitemap.xml` to Google
-Search Console.
-
----
-
-## 6. What's already handled
-
-- **Responsive** at every width — single-column phone, two-up tablet, four-up desktop
-- **Accessible** — skip link, focus rings, ARIA on nav/cart/filters, keyboard-operable
-  size and colour pickers, `Esc` closes the cart and menu, respects
-  `prefers-reduced-motion`, real labels on every field
-- **SEO** — unique title and meta description per page, canonical tags, Open Graph tags,
-  semantic landmarks, descriptive alt text, `ClothingStore` + `Product` + `FAQPage`
-  structured data, `robots.txt`, `sitemap.xml`, clean shareable URLs
-  (`shop.html?collection=mama`)
-- **Fast** — no frameworks, SVG placeholders, lazy-loaded images below the fold,
-  `width`/`height` on images to prevent layout shift
-- **Physical-product language throughout** — sizes, fabric weights, fit, care, printing
-  time, shipping and returns. No digital-download wording anywhere.
-
----
-
-## 7. Quick tasks
-
-| I want to… | Do this |
+| Your photo | Save it as |
 |---|---|
-| Change a price | `data.js` → that product's `price` |
-| Add a new tee | Copy a `PRODUCTS` block in `data.js`, change the values |
-| Mark something sold out | Add the size to that product's `soldOut` array |
-| Add a collection | Add to `COLLECTIONS`, then list its `id` in each product's `categories` |
-| Change the announcement bar | `SITE.announcement` in `data.js` |
-| Change free-shipping threshold | `SITE.freeShippingThreshold` in `data.js` |
-| Turn off tax at checkout | Set `SITE.taxRate: 0` in `data.js` |
-| Edit an FAQ answer | `FAQ_GROUPS` in `data.js` |
-| Edit customer reviews | `REVIEWS` in `data.js` |
-| Change the nav links | `NAV` in `components.js` |
-| Re-skin the colours | `:root` at the top of `styles.css` |
+| Close-up on the mannequin, print filling the frame | `stress-never-heard-1.jpg` |
+| Full outfit with the black cap and shoulder bag | `stress-never-heard-2.jpg` |
+| The other full-length outfit shot | `stress-never-heard-3.jpg` |
+
+### I'm Doing My Best Tee — terracotta, tulips
+
+| Your photo | Save it as |
+|---|---|
+| Close-up with the pearl and chain necklaces | `doing-my-best-1.jpg` |
+| Flat lay on the sofa with the jeans and jewellery | `doing-my-best-2.jpg` |
+| Full outfit with the cap and cargo jeans | `doing-my-best-3.jpg` |
+
+### Keep Showing Up Tee — washed black, script
+
+| Your photo | Save it as |
+|---|---|
+| Close-up with the gold chains | `keep-showing-up-1.jpg` |
+| Full outfit with the cream linen trousers | `keep-showing-up-2.jpg` |
+
+### Calm Is a Superpower Tee — kelly green, florals
+
+| Your photo | Save it as |
+|---|---|
+| Close-up with the gold chain | `calm-superpower-1.jpg` |
+| Full outfit with the jeans and white trainers | `calm-superpower-2.jpg` |
+
+**Photo 1 of each tee is the main one** shown on the shop grid. The others
+appear on that T-shirt's own page, and customers can click to zoom on them.
+
+Those 10 files fill the whole website — the homepage hero, the "Our Story"
+photos, collection covers and Instagram tiles all reuse them automatically.
+
+> **Filenames must match exactly** — all lowercase, ending in `.jpg`, no
+> spaces. `Stress-Never-Heard-1.JPG` will not work; `stress-never-heard-1.jpg`
+> will. If a photo is `.png` or `.heic`, save it as `.jpg` first.
+
+Until a photo is uploaded, its spot shows a plain "Photo coming soon" tile —
+nothing looks broken while you work through the list. Wait about a minute
+after committing, then refresh the site.
+
+---
+
+## Step 3 — Fill in your real contact details
+
+Open **[assets/js/data.js](assets/js/data.js)**, click the pencil icon, and
+find the `SITE` block near the top. Replace these placeholders:
+
+| Field | What it controls |
+|---|---|
+| `email` | Every "email us" link and address on the site |
+| `whatsapp` | Digits only, with country code, no `+` or spaces — e.g. `923001234567` |
+| `whatsappDisplay` | The human-readable version shown next to it — e.g. `+92 300 1234567` |
+| `location` | Shown in the footer and shipping copy — e.g. `Karachi, Pakistan` |
+| `social.instagram` / `pinterest` / `facebook` | Your real profile URLs |
+| `social.etsy` | **Your Etsy shop URL** — powers every "Explore Our Etsy Shop" button and the footer's "Digital Studio" link |
+
+---
+
+## Step 4 — Confirm your delivery and payment setup
+
+Still in `data.js`:
+
+- **`SHIPPING_METHODS`** — your real courier names, delivery estimates and
+  charges (currently Rs. 250 standard / Rs. 450 express — placeholders).
+- **`PAYMENT_METHODS`** — Cash on Delivery and Bank Transfer are on by
+  default. Online Payment shows as "Coming Soon" (`enabled: false`) until you
+  connect a gateway — see the note in Step 6.
+- **`PAKISTAN_CITIES`** / **`PAKISTAN_PROVINCES`** — the dropdowns on the
+  checkout address form. Add or remove cities as needed.
+- If you enable Bank Transfer, open **[checkout.html](checkout.html)** and
+  search for `[EDIT]` to add your account title, number and branch — it's
+  shown to customers who choose that payment method after they place an order.
+
+---
+
+## What's in the shop right now
+
+| T-shirt | Colour | Price |
+|---|---|---|
+| Stress? Never Heard of Her Tee | Powder Blue | Rs. 2,400 |
+| I'm Doing My Best Tee | Terracotta | Rs. 2,400 |
+| Keep Showing Up Tee | Washed Black | Rs. 2,600 |
+| Calm Is a Superpower Tee | Kelly Green | Rs. 2,200 |
+
+All four sit in **New Chapters**. **Everyday**, **Mama** and **Custom** are
+live collections with no products in them yet — their shop pages show a warm
+"new designs coming soon" message instead of an empty grid, so nothing looks
+broken. Add a product to one (see below) and it fills in automatically.
+
+---
+
+## Change a price, name or description
+
+1. Open **[assets/js/data.js](assets/js/data.js)**, click the pencil icon.
+2. Ctrl+F (Cmd+F on a Mac) to find the tee.
+3. Change the number after `price:` — e.g. `price: 2400` to `price: 2600`.
+4. Scroll down, click **Commit changes**.
+
+Only change words **inside the quote marks** and numbers after `price:`.
+Leave the commas, quotes and curly brackets exactly as they are. Every
+`fabric:`, `fit:` and `care:` line is marked `[EDIT]` — replace those with
+your actual fabric composition, GSM and wash instructions once confirmed;
+don't leave invented specifics in place.
+
+### Adding a new T-shirt
+
+Copy one whole product block — from its `{` to its `},` — paste it
+underneath, and change the id, name, price, description, colours and image
+filenames. Then upload photos matching those new filenames. Give it a
+`categories` array using any collection id from `COLLECTIONS` (e.g. `"mama"`,
+`"everyday"`, `"limited"`) and it appears there automatically.
+
+---
+
+## Step 5 — Content that needs your real answers
+
+A few pages are built but intentionally left as honest placeholders where I
+don't have your real information — search each file for `[EDIT]` to find
+every spot:
+
+- **[faq.html](faq.html)'s answers** live in `FAQ_GROUPS` in `data.js` —
+  fabric, print method, wash care, tracking and return-window answers.
+- **[shipping.html](shipping.html)** — tracking process and delivery
+  exceptions.
+- **[returns-exchanges.html](returns-exchanges.html)** — your actual return
+  window and refund process.
+- **[privacy.html](privacy.html)** and **[terms.html](terms.html)** are
+  starting templates — have them reviewed before launch.
+
+---
+
+## Step 6 — Connecting real payments (needs a developer)
+
+Cash on Delivery and Bank Transfer work today with no setup — orders placed
+that way just need to reach you, which they already do (the order details are
+ready to wire into email/WhatsApp/a spreadsheet).
+
+Online Payment is a placeholder until a gateway (JazzCash, Easypaisa, or a
+card processor) is connected. The exact spot to wire one in is marked with a
+comment in **[assets/js/pages.js](assets/js/pages.js)** — search for
+`CONNECT A PAKISTANI PAYMENT GATEWAY HERE`. Once connected, set
+`enabled: true` on the `online` entry in `PAYMENT_METHODS` in `data.js`.
+
+---
+
+## The Chapter Journal
+
+Blog-style posts live in `JOURNAL_POSTS` in `data.js` — each one has a title,
+excerpt, image and body paragraph. Add a new entry by copying a block and
+changing its `slug` (used in the URL), then write real content once you have
+it — the two draft entries are marked `[EDIT]`.
+
+---
+
+## Something broke?
+
+Nothing is ever lost. Every change is saved as its own version:
+
+1. Click **Commits** (above the file list).
+2. Find the change you want to undo.
+3. Click it, then click **Revert**.
+
+---
+
+*Editing the code, the design system, or the single-file preview build? See
+[docs/DEVELOPER-NOTES.md](docs/DEVELOPER-NOTES.md).*

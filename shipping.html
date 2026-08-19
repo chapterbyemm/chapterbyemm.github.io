@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shipping &amp; Delivery | ChapterByEmm</title>
+  <meta name="description" content="Shipping and delivery information for ChapterByEmm printed T-shirts — nationwide delivery across Pakistan, delivery times, charges, order processing and tracking.">
+  <link rel="canonical" href="https://chapterbyemm.com/shipping.html">
+  <link rel="icon" href="assets/img/site/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="shipping">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-site-header></div>
+
+  <noscript>
+    <nav class="shell" aria-label="Main navigation" style="padding-block:1rem">
+      <a href="index.html">Home</a> · <a href="shop.html">Shop</a> · <a href="collections.html">Collections</a> ·
+      <a href="about.html">Our Story</a> · <a href="custom-designs.html">Custom</a> ·
+      <a href="journal.html">Journal</a> · <a href="contact.html">Contact</a>
+    </nav>
+  </noscript>
+
+  <main id="main">
+    <header class="shell page-head">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a> / <span aria-current="page">Shipping &amp; Delivery</span>
+      </nav>
+      <span class="eyebrow">Nationwide Delivery</span>
+      <h1>Shipping &amp; Delivery</h1>
+      <p class="lede" style="max-width:60ch">Every ChapterByEmm order is a physical printed T-shirt, made after you order and shipped from our studio in Pakistan.</p>
+    </header>
+
+    <section class="shell prose" style="padding-bottom:var(--section-y)">
+      <h2>Where We Deliver</h2>
+      <p>We currently ship nationwide across Pakistan, including all major cities and most surrounding areas. If you're unsure whether we deliver to your area, message us on WhatsApp before ordering and we'll confirm.</p>
+
+      <h2>Order Processing</h2>
+      <p>Every tee is printed to order rather than pulled from a shelf. Printing and quality-checking typically takes <strong>2–4 business days</strong>. Custom or personalised orders take a little longer — <strong>3–5 business days</strong> — because we confirm a proof with you before printing.</p>
+
+      <h2>Delivery Times &amp; Charges</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Method</th><th>Estimated Delivery</th><th>Charge</th></tr></thead>
+          <tbody data-shipping-table></tbody>
+        </table>
+      </div>
+      <p class="hint">Standard delivery is free on orders above <span data-free-shipping-amount></span>. Delivery times begin once your order has finished printing, not from the moment you place it. [EDIT] Confirm these figures once your courier is finalised.</p>
+
+      <h2>Tracking Your Order</h2>
+      <p>[EDIT] Add your tracking process here once confirmed with your courier — for example, a tracking number sent by SMS or WhatsApp once your parcel is dispatched.</p>
+
+      <h2>Delivery Exceptions</h2>
+      <p>Occasionally, deliveries to remote areas, during public holidays, or affected by weather may take longer than the estimates above. If your order is significantly delayed, message us and we'll follow up with the courier on your behalf.</p>
+
+      <h2>Cash on Delivery</h2>
+      <p>Cash on Delivery is available nationwide — you pay in cash when your order arrives. Bank Transfer is also accepted; online card and wallet payment is coming soon.</p>
+    </section>
+
+    <section class="section section--sand">
+      <div class="shell center">
+        <span class="eyebrow">Questions?</span>
+        <h2>We're happy to help before you order</h2>
+        <div class="hero-cta" style="justify-content:center;margin-top:1.5rem">
+          <a class="btn" href="contact.html">Contact Us</a>
+          <a class="btn btn--ghost" href="faq.html">Read the FAQ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/pages.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var body = document.querySelector("[data-shipping-table]");
+      if (body) {
+        body.innerHTML = SHIPPING_METHODS.map(function (m) {
+          return "<tr><td><strong>" + m.label + "</strong></td><td>" + m.eta + "</td><td>" + (m.price === 0 ? "Free" : money(m.price)) + "</td></tr>";
+        }).join("");
+      }
+      var amt = document.querySelector("[data-free-shipping-amount]");
+      if (amt) amt.textContent = money(SITE.freeShippingThreshold);
+    });
+  </script>
+</body>
+</html>
