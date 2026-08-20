@@ -1,0 +1,36 @@
+ChapterByEmm — files to upload
+==============================
+
+Upload these to your repo on GitHub, keeping the folder structure below.
+For each folder: open it on GitHub -> "Add file" -> "Upload files" ->
+drag the files in -> "Commit changes".
+
+  assets/img/products/   10 renamed T-shirt photos
+  assets/img/site/       logo.png
+  assets/css/            styles.css
+  assets/js/             data.js, components.js, pages.js
+  /                      index.html, chapterbyemm-single-page.html
+  docs/                  EDITORS-MANUAL.html   <- open this one in a browser
+
+AFTER UPLOADING, DELETE THE OLD FILES
+-------------------------------------
+The 10 photos were renamed, so the old copies are still sitting there.
+In assets/img/products/ delete every file that starts with "image-".
+Also delete assets/img/site/logo.jpg (logo.png replaces it).
+To delete: click the file -> "..." menu (top right) -> Delete file -> Commit.
+
+If you skip this the site still works, the old files just sit there unused.
+
+THE MANUAL
+----------
+docs/EDITORS-MANUAL.html is your how-to guide. Download it and open it in
+any browser (it does not need to be on GitHub to work). It covers swapping
+photos, changing prices, adding products, and what still needs filling in
+before launch.
+
+STILL NEEDED FROM YOU
+---------------------
+Two photo slots are still empty placeholders:
+  - the hero photo (the lifestyle shot at the top of the homepage)
+  - the Mama Collection and Custom T-Shirts collection cards
+Send those and the homepage matches the design exactly.

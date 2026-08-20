@@ -54,16 +54,21 @@ function initHome() {
 
   const colWrap = $("[data-collections-home]");
   if (colWrap) {
-    colWrap.innerHTML = COLLECTIONS.filter((c) => c.id !== "new-chapters")
-      .slice(0, 6)
+    /* the five shown on the homepage rail, in this order */
+    const HOME_COLLECTIONS = ["new-chapters", "mama", "inspired", "bold", "custom"];
+    colWrap.innerHTML = HOME_COLLECTIONS.map((id) => COLLECTIONS.find((c) => c.id === id))
+      .filter(Boolean)
       .map(
         (c) => `
         <a class="collection-card reveal" href="shop.html?collection=${c.id}">
-          <img src="${c.image}" alt="${escapeHtml(c.name)} — printed T-shirts by ChapterByEmm" width="900" height="1100" loading="lazy" decoding="async">
-          <div class="overlay-text">
-            <h3>${escapeHtml(c.name)}</h3>
-            <p>${escapeHtml(c.blurb)}</p>
-          </div>
+          <span class="collection-card__media">
+            <img src="${c.image}" alt="${escapeHtml(c.name)} — printed T-shirts by ChapterByEmm" width="900" height="1100" loading="lazy" decoding="async">
+            <span class="collection-card__go" aria-hidden="true">→</span>
+          </span>
+          <span class="collection-card__label">
+            <strong>${escapeHtml(c.name)}</strong>
+            <span>${escapeHtml(c.blurb)}</span>
+          </span>
         </a>`
       )
       .join("");

@@ -44,12 +44,12 @@ function renderLayout() {
   const header = document.querySelector("[data-site-header]");
   if (header) {
     header.innerHTML = `
-      <div class="announce">${SITE.announcement}</div>
+      <div class="announce"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v1h2.6a1 1 0 0 1 .8.4l2.4 3.2a1 1 0 0 1 .2.6V16a1 1 0 0 1-1 1h-1a2.5 2.5 0 0 1-5 0H9.5a2.5 2.5 0 0 1-5 0H4a1 1 0 0 1-1-1V6Zm13 3v2h3.3L17.8 9H16ZM7 15.5a1 1 0 1 0 2 0 1 1 0 0 0-2 0Zm8 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0Z"/></svg>${SITE.announcement}</div>
       <div class="site-header">
         <div class="shell header-inner">
           <a class="brand" href="index.html">
             ${SITE.logo ? `<img class="brand-mark" src="${SITE.logo}" alt="" width="44" height="44" data-nofallback>` : ""}
-            <span class="brand-text">${SITE.name}<small>Printed Tees · Pakistan</small></span>
+            <span class="brand-text">${SITE.name}<small>${SITE.tagline}</small></span>
           </a>
           <nav class="nav" aria-label="Main navigation">${navLinks()}</nav>
           <div class="header-actions">

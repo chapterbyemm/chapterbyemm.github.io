@@ -1,0 +1,446 @@
+<title>ChapterByEmm Editor's Manual</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --cream:      #f3efe6;
+    --cream-2:    #ece4d5;
+    --paper:      #fbf9f4;
+    --clay:       #c86d5b;
+    --clay-deep:  #a8503f;
+    --sand:       #ddba8a;
+    --sage:       #347b7b;
+    --ink:        #173e47;
+    --ink-soft:   #2c525c;
+    --muted:      #6e7a78;
+    --line:       #e1d6c2;
+    --warn-bg:    #fbf2e8;
+    --warn-line:  #ddba8a;
+    --code-bg:    #efe9dc;
+
+    --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --cream:     #14282e;
+      --cream-2:   #1b333a;
+      --paper:     #0f2126;
+      --clay:      #e0907c;
+      --clay-deep: #f0ab98;
+      --sand:      #ddba8a;
+      --sage:      #6bb3b3;
+      --ink:       #eee7db;
+      --ink-soft:  #cbd8d8;
+      --muted:     #92a5a5;
+      --line:      #2b4750;
+      --warn-bg:   #23343a;
+      --warn-line: #7a6244;
+      --code-bg:   #1b333a;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --cream:     #14282e;
+    --cream-2:   #1b333a;
+    --paper:     #0f2126;
+    --clay:      #e0907c;
+    --clay-deep: #f0ab98;
+    --sand:      #ddba8a;
+    --sage:      #6bb3b3;
+    --ink:       #eee7db;
+    --ink-soft:  #cbd8d8;
+    --muted:     #92a5a5;
+    --line:      #2b4750;
+    --warn-bg:   #23343a;
+    --warn-line: #7a6244;
+    --code-bg:   #1b333a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+  }
+
+  /* ---------- masthead ---------- */
+  header.masthead {
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 3.5rem 1.5rem 3rem;
+    margin-bottom: 3.5rem;
+  }
+  .masthead-inner { max-width: 760px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clay);
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.1rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 1rem;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 54ch;
+    margin: 0;
+  }
+
+  /* ---------- sections ---------- */
+  section { margin: 0 0 3.5rem; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin: 0 0 0.4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    text-wrap: balance;
+  }
+  h2 .num {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--clay);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 2rem 0 0.6rem;
+  }
+  p { margin: 0 0 1rem; max-width: 65ch; }
+  .lede { color: var(--ink-soft); margin-bottom: 1.5rem; }
+
+  ol, ul { max-width: 65ch; padding-left: 1.3rem; margin: 0 0 1rem; }
+  li { margin-bottom: 0.55rem; }
+  li::marker { color: var(--muted); }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--code-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  .codeblock {
+    overflow-x: auto;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1rem 1.1rem;
+    margin: 0 0 1.25rem;
+  }
+  .codeblock pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  /* ---------- callouts ---------- */
+  .note {
+    background: var(--cream);
+    border-left: 3px solid var(--sage);
+    padding: 1rem 1.2rem;
+    margin: 0 0 1.5rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .note p:last-child { margin-bottom: 0; }
+  .note strong { color: var(--sage); }
+
+  .warn {
+    background: var(--warn-bg);
+    border-left: 3px solid var(--warn-line);
+    padding: 1rem 1.2rem;
+    margin: 0 0 1.5rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .warn p:last-child { margin-bottom: 0; }
+  .warn strong { color: var(--clay-deep); }
+
+  /* ---------- tables ---------- */
+  .table-scroll { overflow-x: auto; margin: 0 0 1.5rem; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.9rem;
+    min-width: 460px;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.6rem 0.9rem 0.6rem 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  td code { white-space: nowrap; }
+
+  /* ---------- checklist ---------- */
+  .check { list-style: none; padding-left: 0; }
+  .check li {
+    padding-left: 1.9rem;
+    position: relative;
+    margin-bottom: 0.8rem;
+  }
+  .check li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    width: 0.95rem;
+    height: 0.95rem;
+    border: 1.5px solid var(--sand);
+    border-radius: 2px;
+  }
+
+  .swatch {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 2px;
+    border: 1px solid var(--line);
+    vertical-align: -0.08em;
+    margin-right: 0.4rem;
+  }
+
+  footer.end {
+    border-top: 1px solid var(--line);
+    padding-top: 1.5rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  a { color: var(--clay-deep); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, li:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="eyebrow">ChapterByEmm</p>
+    <h1>Editor's Manual</h1>
+    <p class="standfirst">How to change photos, prices, products and text on the site — without touching anything that can break it. No coding experience needed.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2><span class="num">START HERE</span>The one file that matters</h2>
+    <p class="lede">Almost everything you'll ever want to change lives in a single file:</p>
+    <div class="codeblock"><pre>assets/js/data.js</pre></div>
+    <p>Prices, product names, descriptions, which photos appear, your WhatsApp number, the announcement bar — all of it. You can edit this file directly on GitHub in your browser.</p>
+
+    <h3>How to edit any file on GitHub</h3>
+    <ol>
+      <li>Open the file in your repository</li>
+      <li>Click the <strong>pencil icon</strong> (top right of the file)</li>
+      <li>Make your change</li>
+      <li>Scroll down, click <strong>Commit changes</strong></li>
+    </ol>
+    <p>Your site updates within a minute or two. That's the whole loop — every task below is a variation on it.</p>
+
+    <div class="warn">
+      <p><strong>The one rule:</strong> keep punctuation exactly as you found it. Every line needs its quotes <code>"</code> and its comma at the end. If something breaks, the products stop appearing — undo your last commit and the site comes straight back.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">TASK</span>Swap a product photo</h2>
+    <p class="lede">The safest method: give the new photo the <em>same filename</em> as the old one. Then nothing else needs changing.</p>
+    <ol>
+      <li>Rename your new photo on your computer to match the one you're replacing — for example <code>calm-superpower-1.jpg</code></li>
+      <li>Go to <code>assets/img/products/</code></li>
+      <li><strong>Add file → Upload files</strong>, drag it in</li>
+      <li><strong>Commit changes</strong> — it overwrites the old one</li>
+    </ol>
+
+    <h3>Which filename is which</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Product</th><th>Photos</th></tr></thead>
+        <tbody>
+          <tr><td>Stress? Never Heard of Her<br><span style="color:var(--muted)">powder blue, cat</span></td><td><code>stress-never-heard-1.jpg</code><br><code>stress-never-heard-2.jpg</code><br><code>stress-never-heard-3.jpg</code></td></tr>
+          <tr><td>I'm Doing My Best<br><span style="color:var(--muted)">terracotta, tulips</span></td><td><code>doing-my-best-1.jpg</code><br><code>doing-my-best-2.jpg</code><br><code>doing-my-best-3.jpg</code></td></tr>
+          <tr><td>Keep Showing Up<br><span style="color:var(--muted)">washed black, script</span></td><td><code>keep-showing-up-1.jpg</code><br><code>keep-showing-up-2.jpg</code></td></tr>
+          <tr><td>Calm Is a Superpower<br><span style="color:var(--muted)">kelly green, florals</span></td><td><code>calm-superpower-1.jpg</code><br><code>calm-superpower-2.jpg</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <p><strong>Photo 1 is the main one.</strong> It's what shows on the shop grid and collection cards. Photos 2 and 3 appear in the gallery on the product page. Make photo 1 your strongest shot.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">TASK</span>Change a price or description</h2>
+    <p class="lede">Open <code>assets/js/data.js</code> and find the product by name. Each one looks like this:</p>
+    <div class="codeblock"><pre>{
+  id: "calm-is-a-superpower-tee",
+  name: "Calm Is a Superpower Tee",
+  price: 2400,
+  compareAt: null,
+  ...
+}</pre></div>
+    <ul>
+      <li><code>price</code> — just the number. <strong>No</strong> commas, no <code>Rs.</code> Write <code>2650</code>, never <code>2,650</code></li>
+      <li><code>compareAt</code> — set this to the old price to show a sale strike-through. Use <code>null</code> for no sale</li>
+      <li><code>name</code> and <code>description</code> — plain text inside the quotes</li>
+      <li><code>badge</code> — <code>"New"</code>, <code>"Best Seller"</code>, <code>"Limited"</code>, or <code>null</code></li>
+    </ul>
+    <div class="note">
+      <p><strong>To put something on sale:</strong> set <code>price</code> to the new lower number and <code>compareAt</code> to the original. The site handles the strike-through and the discount badge automatically.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">TASK</span>Add a brand-new product</h2>
+    <p class="lede">Upload the photos first, then add the product entry.</p>
+
+    <h3>1. Upload the photos</h3>
+    <p>Put them in <code>assets/img/products/</code>. Name them in a simple, consistent pattern — lowercase, hyphens instead of spaces, no capitals or spaces ever:</p>
+    <div class="codeblock"><pre>soft-heart-1.jpg
+soft-heart-2.jpg</pre></div>
+
+    <h3>2. Copy an existing product block</h3>
+    <p>In <code>data.js</code>, copy one whole product block (from its opening <code>{</code> to its closing <code>},</code>), paste it directly below, then change every field:</p>
+    <div class="codeblock"><pre>{
+  id: "soft-heart-tee",
+  name: "Soft Heart Tee",
+  price: 2400,
+  compareAt: null,
+  categories: ["new-chapters", "everyday"],
+  images: [
+    "assets/img/products/soft-heart-1.jpg",
+    "assets/img/products/soft-heart-2.jpg",
+  ],
+  colors: ["cream"],
+  sizes: SIZES_ALL,
+  soldOut: [],
+  badge: "New",
+  description:
+    "A short, warm sentence about this design.",
+  fabric: "100% cotton, 200 gsm.",
+  fit: "Relaxed oversized fit.",
+  care: "Cold machine wash, inside out. Do not tumble dry.",
+  rating: 5.0,
+  reviewCount: 0,
+},</pre></div>
+
+    <h3>3. Use only these values</h3>
+    <p><strong>Colours</strong> — pick from this list (the key on the left, not the label):</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Use this</th><th>Shows as</th></tr></thead>
+        <tbody>
+          <tr><td><code>powder</code></td><td><span class="swatch" style="background:#cfdde9"></span>Powder Blue</td></tr>
+          <tr><td><code>terracotta</code></td><td><span class="swatch" style="background:#c65440"></span>Terracotta</td></tr>
+          <tr><td><code>kelly</code></td><td><span class="swatch" style="background:#2f9c4f"></span>Kelly Green</td></tr>
+          <tr><td><code>charcoal</code></td><td><span class="swatch" style="background:#2c2c2a"></span>Washed Black</td></tr>
+          <tr><td><code>cream</code></td><td><span class="swatch" style="background:#f3efe6"></span>Cream</td></tr>
+          <tr><td><code>sand</code></td><td><span class="swatch" style="background:#ddba8a"></span>Soft Sand</td></tr>
+          <tr><td><code>navy</code></td><td><span class="swatch" style="background:#173e47"></span>Deep Navy</td></tr>
+          <tr><td><code>white</code></td><td><span class="swatch" style="background:#ffffff"></span>White</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Collections</strong> — a product can be in several. Use these exact ids:</p>
+    <div class="codeblock"><pre>new-chapters    everyday    mama    inspired
+bold            limited     custom</pre></div>
+
+    <div class="note">
+      <p><strong>Sold out sizes:</strong> put them in the <code>soldOut</code> list to cross them out on the product page — for example <code>soldOut: ["XS", "XXL"],</code></p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">TASK</span>Change your details or the announcement bar</h2>
+    <p class="lede">These live at the very top of <code>data.js</code>, in the <code>SITE</code> block.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>To change</th><th>Edit this</th></tr></thead>
+        <tbody>
+          <tr><td>The bar across the top of every page</td><td><code>announcement</code></td></tr>
+          <tr><td>Your email address</td><td><code>email</code></td></tr>
+          <tr><td>Your WhatsApp number</td><td><code>whatsapp</code> and <code>whatsappDisplay</code></td></tr>
+          <tr><td>Your city</td><td><code>location</code></td></tr>
+          <tr><td>Instagram / Pinterest / Facebook / Etsy</td><td><code>social</code></td></tr>
+          <tr><td>Free delivery threshold</td><td><code>freeShippingThreshold</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <p><strong>Keep these two in step.</strong> <code>freeShippingThreshold</code> is the number the cart actually uses; <code>announcement</code> is just the text people read. If you change one, change the other — otherwise the banner promises something the checkout doesn't do.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">BEFORE LAUNCH</span>Still to be filled in</h2>
+    <p class="lede">These are real placeholders in the site right now. Everything works, but these say the wrong thing until someone updates them.</p>
+    <ul class="check">
+      <li><strong>WhatsApp number.</strong> Currently <code>923000000000</code>, which is not a real number. In <code>data.js</code> and in <code>custom-designs.html</code>. Until it's changed, every "message us" button goes nowhere.</li>
+      <li><strong>Contact + custom-order forms.</strong> They need a free <a href="https://formspree.io">Formspree</a> account. Sign up, create a form, and replace <code>YOUR_ID</code> in <code>assets/js/app.js</code>. Until then, submissions aren't delivered anywhere.</li>
+      <li><strong>Fabric, fit and care.</strong> Each product has <code>[EDIT]</code> notes for these. Fill in your real composition, GSM, print method and wash instructions. Don't leave invented specifics like "organic cotton" unless it's true.</li>
+      <li><strong>Shipping and returns pages.</strong> Both carry <code>[EDIT]</code> markers — delivery timeframes, charges, and your returns window need your real policy.</li>
+      <li><strong>Privacy and terms.</strong> Templates only. Have someone read them before you take real orders.</li>
+      <li><strong>Business email.</strong> Currently <code>hello@chapterbyemm.com</code> — confirm this is a real inbox someone checks.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="num">IF SOMETHING BREAKS</span>Undoing a change</h2>
+    <p class="lede">Nothing you do here is permanent. Every change is saved separately and can be reversed.</p>
+    <ol>
+      <li>Go to the <strong>Commits</strong> list in your repository</li>
+      <li>Find the change that caused the problem</li>
+      <li>Open it and click <strong>Revert</strong></li>
+    </ol>
+    <p>The site returns to exactly how it was. If products vanish from the shop page, it's almost always a missing comma or quote mark in <code>data.js</code> — revert, then try the edit again more slowly.</p>
+    <div class="note">
+      <p><strong>A good habit:</strong> change one thing, commit, check the site. Small commits are far easier to undo than one big one.</p>
+    </div>
+  </section>
+
+  <footer class="end">
+    <p>Every task here is done in the browser on GitHub — nothing needs installing. The one job that needs outside help is connecting a real payment gateway; everything else on this page is yours to change.</p>
+  </footer>
+
+</div>

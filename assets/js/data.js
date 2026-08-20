@@ -44,10 +44,10 @@ const SITE = {
   currency: "PKR",
   currencySymbol: "Rs. ",
   taxRate: 0, // set a decimal (e.g. 0.05) if you ever need to add tax at checkout
-  freeShippingThreshold: 4000, // free standard delivery over this amount (PKR)
+  freeShippingThreshold: 3500, // free standard delivery over this amount (PKR)
 
   // Shown in the announcement bar above the header on every page.
-  announcement: "Free shipping across Pakistan on orders above Rs. 4,000 · Cash on Delivery available",
+  announcement: "Free shipping on orders above Rs. 3,500 across Pakistan.",
 
   // Default checkout country. Pakistan-only for now — see PAKISTAN_LOCATIONS
   // below for the province/city lists used in the address form.
@@ -144,8 +144,8 @@ const COLORS = {
 const COLLECTIONS = [
   {
     id: "new-chapters",
-    name: "New Chapters",
-    blurb: "The newest prints, fresh off the press.",
+    name: "New Arrivals",
+    blurb: "Fresh designs, new energy.",
     image: "assets/img/products/doing-my-best-3.jpg",
   },
   {
@@ -156,20 +156,20 @@ const COLLECTIONS = [
   },
   {
     id: "mama",
-    name: "Mama",
-    blurb: "For every stage of motherhood — soft, honest, wearable every day.",
+    name: "Mama Collection",
+    blurb: "For every kind of mama.",
     image: "assets/img/site/photo-coming-soon.jpg",
   },
   {
     id: "inspired",
-    name: "Inspired",
-    blurb: "Gentle reminders you can wear on the days you need them most.",
+    name: "Inspirational",
+    blurb: "Words that stay with you.",
     image: "assets/img/products/calm-superpower-2.jpg",
   },
   {
     id: "bold",
-    name: "Bold Statements",
-    blurb: "Say it louder. Statement prints for the confident chapters.",
+    name: "Bold & Statement",
+    blurb: "Make a statement.",
     image: "assets/img/products/keep-showing-up-2.jpg",
   },
   {
@@ -180,8 +180,8 @@ const COLLECTIONS = [
   },
   {
     id: "custom",
-    name: "Custom",
-    blurb: "Your words, your idea, printed on our blanks.",
+    name: "Custom T-Shirts",
+    blurb: "Your idea. Your design.",
     image: "assets/img/site/photo-coming-soon.jpg",
   },
 ];
@@ -444,7 +444,7 @@ const FAQ_GROUPS = [
       },
       {
         q: "How much is delivery?",
-        a: "Standard delivery is Rs. 250 and express is Rs. 450. Standard delivery is free on orders above Rs. 4,000. [EDIT] Confirm these rates once you've finalised a courier.",
+        a: "Standard delivery is Rs. 250 and express is Rs. 450. Standard delivery is free on orders above Rs. 3,500. [EDIT] Confirm these rates once you've finalised a courier.",
       },
       {
         q: "Can I pay Cash on Delivery?",
